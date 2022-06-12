@@ -1,0 +1,7 @@
+---
+:concurrency: 1
+:pidfile: tmp/pids/sidekiq.pid
+:queues:
+- flyweight_cypress_default
+- flyweight_cypress_active_storage_analysis
+- flyweight_cypress_active_storage_purge

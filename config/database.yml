@@ -1,0 +1,23 @@
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  pool: <%= ENV.fetch('RAILS_MAX_THREADS') { 5 } %>
+  owner: flyweight
+  username: flyweight
+
+development:
+  <<: *default
+  database: flyweight_development
+
+test: &test
+  <<: *default
+  host: localhost
+  username: <%= ENV.fetch('POSTGRES_USER') { 'tmorgan' } %>
+  password: <%= ENV.fetch('POSTGRES_PASSWORD') { '' } %>
+  database: <%= ENV.fetch('POSTGRES_DB') { 'flyweight_test' } %>
+
+cypress: *test
+
+production:
+  <<: *default
+  database: flyweight_production

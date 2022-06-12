@@ -1,0 +1,19 @@
+development:
+  backend: "http://127.0.0.1:5000"
+  frontend: "http://127.0.0.1:5173"
+  cable: "ws://127.0.0.1:28080/cable"
+
+test:
+  backend: "http://app.test.host"
+  frontend: "http://test.host"
+  cable: "ws://backend.example.com/cable"
+
+cypress:
+  backend: "http://127.0.0.1:5000"
+  frontend: "http://127.0.0.1:4173"
+  cable: "ws://127.0.0.1:28080/cable"
+
+production:
+  backend: "https://app.flyweight.org"
+  frontend: "https://flyweight.org"
+  cable: "wss://app.flyweight.org/cable"
