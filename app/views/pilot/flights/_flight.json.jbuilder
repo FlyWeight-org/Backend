@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-json.partial! "flights/flight", flight: flight
+json.partial!("flights/flight", flight:)
 json.can_edit true
 
 json.loads do

@@ -24,10 +24,10 @@ To run the server in development mode, you can create a `Procfile` with contents
 such as:
 
 ```
-backend: cd Backend && rvm 3.1.3@flyweight exec rails server
+backend: cd Backend && rvm 3.2.1@flyweight exec rails server
 frontend: cd Frontend && yarn dev
-jobs: cd Backend && rvm 3.1.3@flyweight exec bundle exec sidekiq -C config/sidekiq.yml
-cable: cd Backend && rvm 3.1.3@flyweight exec ./bin/cable
+jobs: cd Backend && rvm 3.2.1@flyweight exec bundle exec sidekiq -C config/sidekiq.yml
+cable: cd Backend && rvm 3.2.1@flyweight exec ./bin/cable
 ```
 
 Install the `foreman` gem to run the Procfile.
@@ -75,7 +75,7 @@ information, any Load with a matching `slug` is updated.
 
 ### Controllers
 
-Controllers serve exclusively JSON and are organized in a  RESTful,
+Controllers serve exclusively JSON and are organized in a RESTful,
 resource-oriented manner.
 
 The root path `/` is a redirect to the front-end URL.

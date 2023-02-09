@@ -17,7 +17,7 @@ RSpec.describe Flight do
       before :each do
         create :flight, description: "no-pax"
         flight = create(:flight, description: "pax")
-        create_list :load, 3, :passenger, flight: flight
+        create_list(:load, 3, :passenger, flight:)
         create_list :load, 3, :cargo, flight:
       end
 
