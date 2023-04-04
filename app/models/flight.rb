@@ -64,6 +64,8 @@ class Flight < ApplicationRecord
   before_validation :set_uuid
   after_commit { FlightsChannel.broadcast_to pilot, FlightsChannel::Coder.encode(self) }
 
+  after_create :schedule_purge
+
   # @private
   def to_param = uuid
 
@@ -77,5 +79,9 @@ class Flight < ApplicationRecord
 
   def set_uuid
     self.uuid ||= SecureRandom.uuid
+  end
+
+  def schedule_purge
+    PurgeFlightJob.set(wait_until: date.to_time + 1.week).perform_later(self)
   end
 end

@@ -10,6 +10,12 @@ RSpec.describe Flight do
       flight.validate
       expect(flight.uuid).to be_present
     end
+
+    it "schedules a purge" do
+      flight.save
+
+      expect(PurgeFlightJob).to have_been_enqueued.with(flight).at(flight.date.to_time + 1.week)
+    end
   end
 
   context "[scopes]" do
