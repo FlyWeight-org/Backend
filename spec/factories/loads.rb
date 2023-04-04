@@ -2,7 +2,7 @@
 
 FactoryBot.define do
   factory :load do
-    association :flight
+    flight
 
     trait :passenger do
       sequence(:name) { |i| "passenger-#{i}" }

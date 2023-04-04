@@ -3,7 +3,7 @@
 source "https://rubygems.org"
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby "3.2.1"
+ruby "3.2.2"
 
 # CORE
 gem "puma"
@@ -28,7 +28,6 @@ gem "bugsnag"
 
 group :development do
   # ERRORS
-  gem "better_errors"
   gem "binding_of_caller"
 
   # DEPLOYMENT

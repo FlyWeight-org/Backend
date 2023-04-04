@@ -10,7 +10,7 @@
 # - connect-src 'https://sessions.bugsnag.com'
 #
 # Vue.js in development requires:
-# - connect-src 'ws://localhost:3035' 'http://localhost:3035'
+# - connect-src 'ws://127.0.0.1:3035' 'http://127.0.0.1:3035'
 
 extra_image_sources = %w[]
 extra_script_sources = []
@@ -20,7 +20,7 @@ extra_connect_sources = %w[
 
 if Rails.env.development? || Rails.env.cypress?
   extra_script_sources << :unsafe_eval << :unsafe_inline
-  # extra_connect_sources << "ws://localhost:3035" << "http://localhost:3035"
+  # extra_connect_sources << "ws://127.0.0.1:3035" << "http://127.0.0.1:3035"
 end
 
 Rails.application.configure do
