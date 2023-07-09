@@ -22,9 +22,7 @@ class FlightsController < ApplicationController
   # |:-----|:----------------------|
   # | `id` | The UUID of a Flight. |
 
-  def show
-    respond_with @flight
-  end
+  def show = respond_with @flight
 
   private
 
@@ -32,7 +30,5 @@ class FlightsController < ApplicationController
     @flight = Flight.with_passenger_count.find_by!(uuid: params[:id])
   end
 
-  def authorized_flight?
-    pilot_signed_in? && @flight.pilot == current_pilot
-  end
+  def authorized_flight? = pilot_signed_in? && @flight.pilot == current_pilot
 end

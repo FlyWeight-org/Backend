@@ -19,15 +19,9 @@ class Cypress::LastEmail
 
   private
 
-  def no_email_response
-    [404, {"Content-Type" => "text-plain"}, ["No emails yet"]]
-  end
+  def no_email_response = [404, {"Content-Type" => "text-plain"}, ["No emails yet"]]
 
-  def email_response(mail)
-    [200, {"Content-Type" => "text/plain"}, [mail.to_s]]
-  end
+  def email_response(mail) = [200, {"Content-Type" => "text/plain"}, [mail.to_s]]
 
-  def last_email
-    ActionMailer::Base.deliveries.last
-  end
+  def last_email = ActionMailer::Base.deliveries.last
 end

@@ -5,9 +5,7 @@
 class FlightsChannel < ApplicationCable::Channel
 
   # @private
-  def subscribed
-    stream_for current_pilot, coder: nil
-  end
+  def subscribed = stream_for current_pilot, coder: nil
 
   # @private
   module Coder

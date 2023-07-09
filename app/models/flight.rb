@@ -71,9 +71,7 @@ class Flight < ApplicationRecord
 
   # @return [Integer] The number of passengers (Loads with `weight` > 0).
 
-  def passenger_count
-    read_attribute(:passenger_count) || passengers.count
-  end
+  def passenger_count = read_attribute(:passenger_count) || passengers.count
 
   private
 

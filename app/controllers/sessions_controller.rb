@@ -15,7 +15,5 @@ class SessionsController < Devise::SessionsController
     render "registrations/create"
   end
 
-  def respond_to_on_destroy
-    head :no_content
-  end
+  def respond_to_on_destroy = head :no_content
 end

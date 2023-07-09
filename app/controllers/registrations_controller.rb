@@ -9,10 +9,7 @@ class RegistrationsController < Devise::RegistrationsController
   # @private
   def show; end
 
-  # @private
-  def create
-    super { response.status = :created }
-  end
+  def create = super { response.status = :created }
 
   private
 
@@ -20,7 +17,6 @@ class RegistrationsController < Devise::RegistrationsController
     sign_in(resource_name, resource, store: false)
   end
 
-  def bypass_sign_in(_resource, scope: nil)
-    # do nothing, no sessions
-  end
+  # do nothing, no sessions
+  def bypass_sign_in(_resource, scope: nil); end
 end

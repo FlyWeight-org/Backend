@@ -29,8 +29,8 @@ RSpec.describe Flight do
 
       it "includes the passenger count" do
         flights = described_class.with_passenger_count.to_a
-        with_pax = flights.detect { |f| f.description == "pax" }
-        no_pax = flights.detect { |f| f.description == "no-pax" }
+        with_pax = flights.detect { _1.description == "pax" }
+        no_pax = flights.detect { _1.description == "no-pax" }
 
         expect(with_pax.passenger_count).to eq(3)
         expect(no_pax.passenger_count).to eq(0)

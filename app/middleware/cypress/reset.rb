@@ -23,17 +23,13 @@ class Cypress::Reset
   private
 
   def reset_cypress
-    models.each { |model| truncate model }
+    models.each { truncate _1 }
     ActionMailer::Base.deliveries.clear
   end
 
-  def response(flight)
-    [200, {"Content-Type" => "text/plain"}, [flight.uuid]]
-  end
+  def response(flight) = [200, {"Content-Type" => "text/plain"}, [flight.uuid]]
 
-  def models
-    [Flight, Load, Pilot]
-  end
+  def models = [Flight, Load, Pilot]
 
   def truncate(model)
     model.connection.execute "TRUNCATE #{model.quoted_table_name} CASCADE"
