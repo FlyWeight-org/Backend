@@ -26,8 +26,6 @@ Rails.application.routes.draw do
   end
 
   if Rails.env.cypress?
-    require "cypress/reset"
-    require "cypress/last_email"
     get "__cypress__/reset" => Cypress::Reset.new
     get "__cypress__/last_email" => Cypress::LastEmail.new
   end
