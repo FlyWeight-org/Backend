@@ -17,7 +17,7 @@ class Pilot::FlightsController < ApplicationController
 
   def index
     @flights = current_pilot.flights.with_passenger_count.order(date: :desc)
-    respond_with @flights
+    respond_with(@flights) if stale?(etag: @flights, last_modified: Flight.where(id: @flights.ids).maximum(:updated_at))
   end
 
   # Creates a new Flight for a pilot from the given parameters.

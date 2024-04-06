@@ -22,7 +22,9 @@ class FlightsController < ApplicationController
   # |:-----|:----------------------|
   # | `id` | The UUID of a Flight. |
 
-  def show = respond_with @flight
+  def show
+    respond_with(@flight)
+  end
 
   private
 
