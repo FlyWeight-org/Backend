@@ -23,7 +23,7 @@ RSpec.describe "Account" do
     it "handles validation errors" do
       post collection_path,
            params: {pilot: pilot_params.merge(name: " ")}
-      expect(response).to have_http_status(:unprocessable_entity)
+      expect(response).to have_http_status(:unprocessable_content)
       expect(response.body).to match_json_expression(errors: {
                                                          name: [String]
                                                      })
@@ -79,7 +79,7 @@ RSpec.describe "Account" do
       it "handles validation errors" do
         put collection_path,
             params: {pilot: pilot_params.merge(email: " ")}
-        expect(response).to have_http_status(:unprocessable_entity)
+        expect(response).to have_http_status(:unprocessable_content)
         expect(response.body).to match_json_expression(errors: {
                                                            email: [String]
                                                        })

@@ -77,7 +77,7 @@ RSpec.describe "/pilot/flights" do
         post collection_path,
              params: {flight: flight_params.merge(date: " ")}
 
-        expect(response).to have_http_status(:unprocessable_entity)
+        expect(response).to have_http_status(:unprocessable_content)
         expect(response.body).to match_json_expression(errors: {date: [String]})
       end
     end
@@ -134,7 +134,7 @@ RSpec.describe "/pilot/flights" do
         post collection_path,
              params: {flight: flight_params.merge(date: " ")}
 
-        expect(response).to have_http_status(:unprocessable_entity)
+        expect(response).to have_http_status(:unprocessable_content)
         expect(response.body).to match_json_expression(errors: {date: [String]})
       end
     end
