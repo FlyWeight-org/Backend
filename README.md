@@ -46,8 +46,8 @@ End-to-end testing is documented in the readme for the front-end.
 
 #### Deployment
 
-The back-end is deployed using Capistrano. The front-end is a static site that
-is compiled and deployed using a simple shell script with `rsync`.
+The back-end and front-end are both deployed using Fly.io. A GitHub Action,
+defined in the `deploy.yml` workflow, runs after CI is complete.
 
 ## Architecture
 

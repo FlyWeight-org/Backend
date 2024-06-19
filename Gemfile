@@ -4,6 +4,7 @@ source "https://rubygems.org"
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby "3.3.3"
+gem "net-pop", github: "ruby/net-pop" # 3.3.3 hack fix
 
 # CORE
 gem "puma"
@@ -30,17 +31,8 @@ group :development do
   # ERRORS
   gem "binding_of_caller"
 
-  # DEPLOYMENT
-  gem "bcrypt_pbkdf", require: false
-  gem "bugsnag-capistrano", require: false
-  gem "capistrano", require: false
-  gem "capistrano-bundler", require: false
-  gem "capistrano-git-with-submodules", require: false
-  gem "capistrano-nvm", require: false
-  gem "capistrano-rails", require: false
-  gem "capistrano-rvm", require: false
-  gem "capistrano-sidekiq", require: false
-  gem "ed25519", require: false
+  # FLY.IO
+  gem "dockerfile-rails"
 end
 
 group :doc do
