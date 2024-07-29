@@ -24,10 +24,10 @@ To run the server in development mode, you can create a `Procfile` with contents
 such as:
 
 ```
-backend: cd Backend && rvm 3.3.3@flyweight exec rails server
+backend: cd Backend && rvm 3.3.4@flyweight exec rails server
 frontend: cd Frontend && yarn dev
-jobs: cd Backend && rvm 3.3.3@flyweight exec bundle exec sidekiq -C config/sidekiq.yml
-cable: cd Backend && rvm 3.3.3@flyweight exec ./bin/cable
+jobs: cd Backend && rvm 3.3.4@flyweight exec bundle exec sidekiq -C config/sidekiq.yml
+cable: cd Backend && rvm 3.3.4@flyweight exec ./bin/cable
 ```
 
 Install the `foreman` gem to run the Procfile.

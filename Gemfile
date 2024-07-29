@@ -3,8 +3,7 @@
 source "https://rubygems.org"
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby "3.3.3"
-gem "net-pop", github: "ruby/net-pop" # 3.3.3 hack fix
+ruby "3.3.4"
 
 # CORE
 gem "puma"
