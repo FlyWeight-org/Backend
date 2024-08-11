@@ -15,6 +15,7 @@ gem "devise"
 gem "devise-jwt"
 gem "rack-cors"
 gem "redis"
+gem 'kredis'
 gem "sidekiq"
 
 # MODELS
@@ -27,6 +28,9 @@ gem "jbuilder"
 gem "bugsnag"
 
 group :development do
+  # LINT
+  gem "brakeman", require: false
+
   # ERRORS
   gem "binding_of_caller"
 
@@ -35,8 +39,8 @@ group :development do
 end
 
 group :doc do
-  gem "redcarpet", require: nil
-  gem "yard", require: nil
+  gem "redcarpet", require: false
+  gem "yard", require: false
 end
 
 group :test do
