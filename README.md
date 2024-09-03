@@ -26,7 +26,7 @@ such as:
 ```
 backend: cd Backend && rvm 3.3.4@flyweight exec rails server
 frontend: cd Frontend && yarn dev
-jobs: cd Backend && rvm 3.3.4@flyweight exec bundle exec sidekiq -C config/sidekiq.yml
+jobs: cd Backend && rvm 3.3.4@flyweight exec bundle exec good_job start
 cable: cd Backend && rvm 3.3.4@flyweight exec ./bin/cable
 ```
 
