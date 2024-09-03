@@ -13,10 +13,10 @@ gem "responders"
 # FRAMEWORK
 gem "devise"
 gem "devise-jwt"
+gem "good_job"
 gem "kredis"
 gem "rack-cors"
 gem "redis"
-gem "sidekiq"
 
 # MODELS
 gem "pg"

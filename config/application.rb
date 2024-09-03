@@ -48,9 +48,20 @@ module Flyweight
     # Skip views, helpers and assets when generating a new resource.
     config.api_only = true
 
-    # Use a real queuing backend for Active Job (and separate queues per environment).
-    config.active_job.queue_adapter     = :sidekiq
+    config.active_job.queue_adapter     = :good_job
     config.active_job.queue_name_prefix = "flyweight_#{Rails.env}"
+    config.active_job.queue_adapter = :good_job
+    config.good_job.max_threads = 2
+    config.good_job.poll_interval = 30 # seconds
+    config.good_job.enable_cron = true
+    config.good_job.dashboard_default_locale = :en
+    config.good_job.queues = "flyweight_#{Rails.env}_default"
+
+    # for GoodJob dashboard
+    config.middleware.use Rack::MethodOverride
+    config.middleware.use ActionDispatch::Flash
+    config.middleware.use ActionDispatch::Cookies
+    config.middleware.use ActionDispatch::Session::CookieStore
 
     config.generators do |g|
       g.test_framework :rspec, fixture: true, views: false
