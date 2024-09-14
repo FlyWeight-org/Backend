@@ -1,12 +1,10 @@
 development:
-  adapter: redis
-  url: <%= ENV.fetch("REDIS_URL") { "redis://127.0.0.1:6379/1" } %>
+  adapter: <%= ENV.fetch("ACTION_CABLE_ADAPTER", "any_cable") %>
+  url: <%= ENV.fetch("REDIS_URL") { "redis://localhost:6379/1" } %>
   channel_prefix: flyweight_development
 
 test:
   adapter: test
 
 production:
-  adapter: redis
-  url: <%= ENV.fetch("REDIS_URL") { "redis://127.0.0.1:6379/1" } %>
-  channel_prefix: flyweight_production
+  adapter: any_cable

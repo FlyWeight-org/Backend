@@ -73,11 +73,28 @@ GEM
       tzinfo (~> 2.0, >= 2.0.5)
     addressable (2.8.7)
       public_suffix (>= 2.0.2, < 7.0)
+    anycable (1.5.1)
+      anycable-core (= 1.5.1)
+      grpc (~> 1.53)
+    anycable-core (1.5.1)
+      anyway_config (~> 2.2)
+      google-protobuf (~> 3.25)
+    anycable-rails (1.5.3)
+      anycable (~> 1.5.0)
+      anycable-rails-core (= 1.5.3)
+    anycable-rails-core (1.5.3)
+      actioncable (>= 6.0, < 8)
+      anycable-core (~> 1.5.0)
+      globalid
+    anyway_config (2.6.4)
+      ruby-next-core (~> 1.0)
     base64 (0.2.0)
     bcrypt (3.1.20)
     bigdecimal (3.1.8)
     binding_of_caller (1.0.1)
       debug_inspector (>= 1.2.0)
+    bootsnap (1.18.4)
+      msgpack (~> 1.2)
     brakeman (6.2.1)
       racc
     bugsnag (6.27.1)
@@ -140,6 +157,20 @@ GEM
       fugit (>= 1.11.0)
       railties (>= 6.1.0)
       thor (>= 1.0.0)
+    google-protobuf (3.25.4-aarch64-linux)
+    google-protobuf (3.25.4-arm64-darwin)
+    google-protobuf (3.25.4-x86_64-linux)
+    googleapis-common-protos-types (1.16.0)
+      google-protobuf (>= 3.18, < 5.a)
+    grpc (1.66.0-aarch64-linux)
+      google-protobuf (>= 3.25, < 5.0)
+      googleapis-common-protos-types (~> 1.0)
+    grpc (1.66.0-arm64-darwin)
+      google-protobuf (>= 3.25, < 5.0)
+      googleapis-common-protos-types (~> 1.0)
+    grpc (1.66.0-x86_64-linux)
+      google-protobuf (>= 3.25, < 5.0)
+      googleapis-common-protos-types (~> 1.0)
     hashdiff (1.1.1)
     i18n (1.14.5)
       concurrent-ruby (~> 1.0)
@@ -169,6 +200,7 @@ GEM
     marcel (1.0.4)
     mini_mime (1.1.5)
     minitest (5.25.1)
+    msgpack (1.7.2)
     net-imap (0.4.16)
       date
       net-protocol
@@ -268,6 +300,7 @@ GEM
       rspec-mocks (~> 3.13)
       rspec-support (~> 3.13)
     rspec-support (3.13.1)
+    ruby-next-core (1.0.3)
     securerandom (0.3.1)
     stringio (3.1.1)
     thor (1.3.2)
@@ -300,7 +333,9 @@ PLATFORMS
   x86_64-linux
 
 DEPENDENCIES
+  anycable-rails
   binding_of_caller
+  bootsnap
   brakeman
   bugsnag
   database_cleaner
@@ -329,4 +364,4 @@ RUBY VERSION
    ruby 3.3.5p100
 
 BUNDLED WITH
-   2.5.16
+   2.5.18

@@ -82,5 +82,7 @@ module Flyweight
         port:     backend.port,
         protocol: backend.scheme
     }
+
+    config.host_authorization = {exclude: ->(request) { request.path.start_with?("/up") }}
   end
 end

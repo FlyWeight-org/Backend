@@ -6,11 +6,13 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby "3.3.5"
 
 # CORE
+gem "bootsnap", require: false
 gem "puma"
 gem "rails"
 gem "responders"
 
 # FRAMEWORK
+gem "anycable-rails"
 gem "devise"
 gem "devise-jwt"
 gem "good_job"
