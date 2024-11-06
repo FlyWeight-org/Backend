@@ -24,11 +24,11 @@ To run the server in development mode, you can create a `Procfile` with contents
 such as:
 
 ```
-backend: cd Backend && rvm 3.3.5@flyweight exec rails server
+backend: cd Backend && rvm 3.3.6@flyweight exec rails server
 frontend: cd Frontend && yarn dev
-jobs: cd Backend && rvm 3.3.5@flyweight exec bundle exec good_job start
-anycable: cd Backend && rvm 3.3.5@flyweight exec anycable
-ws: cd Backend && rvm 3.3.5@flyweight exec bin/anycable-go --port=8080
+jobs: cd Backend && rvm 3.3.6@flyweight exec bundle exec good_job start
+anycable: cd Backend && rvm 3.3.6@flyweight exec anycable
+ws: cd Backend && rvm 3.3.6@flyweight exec bin/anycable-go --port=8080
 ```
 
 Install the `foreman` gem to run the Procfile.
