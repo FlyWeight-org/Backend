@@ -3,7 +3,7 @@
 source "https://rubygems.org"
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby "3.3.6"
+ruby "3.4.4"
 
 # CORE
 gem "bootsnap", require: false
@@ -56,6 +56,6 @@ group :test do
   gem "ffaker"
 
   # ISOLATION
-  gem "database_cleaner"
+  gem "database_cleaner-active_record"
   gem "webmock"
 end
