@@ -41,7 +41,7 @@ RSpec.describe FlightsChannel do
   end
 
   it "streams flight deletes" do
-    expect { @flight.destroy }.
+    expect { @flight.destroy! }.
         to(have_broadcasted_to(pilot).with do |payload|
              expect(payload).to match_json_expression(
                                   uuid:       String,

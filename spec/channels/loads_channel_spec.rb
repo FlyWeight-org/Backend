@@ -63,7 +63,7 @@ RSpec.describe LoadsChannel do
   end
 
   it "streams load deletes" do
-    expect { @load.destroy }.
+    expect { @load.destroy! }.
         to(have_broadcasted_to(flight).with do |payload|
              expect(payload).to match_json_expression(
                                   slug:       String,

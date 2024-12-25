@@ -43,7 +43,7 @@ class LoadsController < ApplicationController
   end
 
   def load_params
-    params.require(:load).permit :name, :weight, :bags_weight,
-                                 :covid19_vaccination
+    params.expect load: %i[name weight bags_weight
+                           covid19_vaccination]
   end
 end
