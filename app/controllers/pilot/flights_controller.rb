@@ -90,5 +90,5 @@ class Pilot::FlightsController < ApplicationController
     @flight = current_pilot.flights.with_passenger_count.find_by!(uuid: params[:id])
   end
 
-  def flight_params = params.require(:flight).permit :date, :description
+  def flight_params = params.expect flight: %i[date description]
 end

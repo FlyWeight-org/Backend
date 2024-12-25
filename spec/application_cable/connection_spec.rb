@@ -16,7 +16,7 @@ RSpec.describe ApplicationCable::Connection, type: :channel do
 
   it "rejects valid JWTs for deleted pilots" do
     jwt = jwt_for(pilot)
-    pilot.destroy
+    pilot.destroy!
     expect { connect params: {jwt:} }.to have_rejected_connection
   end
 end
