@@ -23,7 +23,7 @@ class Cypress::Reset
   private
 
   def reset_cypress
-    models.each { truncate _1 }
+    models.each { truncate it }
     ActionMailer::Base.deliveries.clear
   end
 
