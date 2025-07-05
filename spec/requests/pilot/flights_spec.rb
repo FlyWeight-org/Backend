@@ -119,11 +119,10 @@ RSpec.describe "/pilot/flights" do
                                        name: String
                                    },
                                    loads:       [{
-                                       slug:                String,
-                                       name:                String,
-                                       weight:              Integer,
-                                       bags_weight:         Integer,
-                                       covid19_vaccination: false
+                                       slug:        String,
+                                       name:        String,
+                                       weight:      Integer,
+                                       bags_weight: Integer
                                    }] * 3
                                  )
 

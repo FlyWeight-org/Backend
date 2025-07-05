@@ -16,13 +16,13 @@
 # Properties
 # ----------
 #
-# |                       |                                                                                 |
-# |:----------------------|:--------------------------------------------------------------------------------|
-# | `name`                | The name of the passenger or a description of the cargo.                        |
-# | `slug`                | The unique identifier derived from the `name`.                                  |
-# | `weight`              | The weight of the passenger (0 for cargo).                                      |
-# | `bags_weight`         | The weight of the passenger's bags (if any), or the weight of the cargo.        |
-# | `covid19_vaccination` | `true` if the passenger is up-to-date on COVID-19 vaccinations (n/a for cargo). |
+# |                       |                                                                                          |
+# |:----------------------|:-----------------------------------------------------------------------------------------|
+# | `name`                | The name of the passenger or a description of the cargo.                                 |
+# | `slug`                | The unique identifier derived from the `name`.                                           |
+# | `weight`              | The weight of the passenger (0 for cargo).                                               |
+# | `bags_weight`         | The weight of the passenger's bags (if any), or the weight of the cargo.                 |
+# | `covid19_vaccination` | `true` if the passenger is up-to-date on COVID-19 vaccinations (legacy) (n/a for cargo). |
 
 class Load < ApplicationRecord
   belongs_to :flight

@@ -24,11 +24,10 @@ RSpec.describe "/flights/:flight_id/loads" do
            params: {load: load_params}
       expect(response).to be_successful
       expect(response.body).to match_json_expression(
-                                 slug:                String,
-                                 name:                String,
-                                 weight:              Integer,
-                                 bags_weight:         Integer,
-                                 covid19_vaccination: Boolean
+                                 slug:        String,
+                                 name:        String,
+                                 weight:      Integer,
+                                 bags_weight: Integer
                                )
 
       expect(flight.loads.count).to eq(1)

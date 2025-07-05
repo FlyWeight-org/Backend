@@ -40,11 +40,10 @@ RSpec.describe LoadsChannel do
     expect { create :load, :cargo, flight: }.
         to(have_broadcasted_to(flight).with do |payload|
              expect(payload).to match_json_expression(
-                                  slug:                String,
-                                  name:                String,
-                                  weight:              0,
-                                  bags_weight:         Integer,
-                                  covid19_vaccination: false
+                                  slug:        String,
+                                  name:        String,
+                                  weight:      0,
+                                  bags_weight: Integer
                                 )
            end)
   end
@@ -53,11 +52,10 @@ RSpec.describe LoadsChannel do
     expect { @load.update! name: "new name" }.
         to(have_broadcasted_to(flight).with do |payload|
              expect(payload).to match_json_expression(
-                                  slug:                "new-name",
-                                  name:                "new name",
-                                  weight:              Integer,
-                                  bags_weight:         Integer,
-                                  covid19_vaccination: Boolean
+                                  slug:        "new-name",
+                                  name:        "new name",
+                                  weight:      Integer,
+                                  bags_weight: Integer
                                 )
            end)
   end
