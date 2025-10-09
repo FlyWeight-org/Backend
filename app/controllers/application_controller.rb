@@ -25,7 +25,6 @@ class ApplicationController < ActionController::API
   rescue_from ActiveRecord::RecordNotFound, with: :not_found
 
   before_action :configure_permitted_parameters, if: :devise_controller?
-  before_bugsnag_notify :add_user_info_to_bugsnag
 
   protected
 
@@ -59,11 +58,5 @@ class ApplicationController < ActionController::API
     else
       {error: I18n.t("application_controller.errors.internal_server_error")}
     end
-  end
-
-  def add_user_info_to_bugsnag(report)
-    report.pilot = {
-        id: current_pilot.id
-    } if pilot_signed_in?
   end
 end

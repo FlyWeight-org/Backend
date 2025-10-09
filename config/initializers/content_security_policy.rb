@@ -6,17 +6,12 @@
 # See the Securing Rails Applications Guide for more information:
 # https://guides.rubyonrails.org/security.html#content-security-policy-header
 
-# Bugsnag requires:
-# - connect-src 'https://sessions.bugsnag.com'
-#
 # Vue.js in development requires:
 # - connect-src 'ws://localhost:3035' 'http://localhost:3035'
 
 extra_image_sources = %w[]
 extra_script_sources = []
-extra_connect_sources = %w[
-    https://sessions.bugsnag.com
-]
+extra_connect_sources = %w[]
 
 if Rails.env.development? || Rails.env.cypress?
   extra_script_sources << :unsafe_eval << :unsafe_inline
