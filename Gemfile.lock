@@ -77,18 +77,18 @@ GEM
       uri (>= 0.13.1)
     addressable (2.8.8)
       public_suffix (>= 2.0.2, < 8.0)
-    anycable (1.6.1)
-      anycable-core (= 1.6.1)
+    anycable (1.6.2)
+      anycable-core (= 1.6.2)
       grpc (~> 1.6)
-    anycable-core (1.6.1)
+    anycable-core (1.6.2)
       anyway_config (~> 2.2)
       base64 (>= 0.2)
       google-protobuf (~> 4)
       stringio (~> 3)
-    anycable-rails (1.6.0)
+    anycable-rails (1.6.1)
       anycable
-      anycable-rails-core (= 1.6.0)
-    anycable-rails-core (1.6.0)
+      anycable-rails-core (= 1.6.1)
+    anycable-rails-core (1.6.1)
       actioncable (>= 7.0, < 9.0)
       anycable-core (~> 1.6.0)
       globalid
@@ -96,10 +96,10 @@ GEM
       ruby-next-core (~> 1.0)
     base64 (0.3.0)
     bcrypt (3.1.20)
-    bigdecimal (3.3.1)
+    bigdecimal (4.0.1)
     binding_of_caller (1.0.1)
       debug_inspector (>= 1.2.0)
-    bootsnap (1.19.0)
+    bootsnap (1.20.0)
       msgpack (~> 1.2)
     brakeman (7.1.1)
       racc
@@ -154,7 +154,7 @@ GEM
       raabro (~> 1.4)
     globalid (1.3.0)
       activesupport (>= 6.1)
-    good_job (4.13.0)
+    good_job (4.13.1)
       activejob (>= 6.1.0)
       activerecord (>= 6.1.0)
       concurrent-ruby (>= 1.3.1)
@@ -206,10 +206,10 @@ GEM
       google-protobuf (>= 3.25, < 5.0)
       googleapis-common-protos-types (~> 1.0)
     hashdiff (1.2.1)
-    i18n (1.14.7)
+    i18n (1.14.8)
       concurrent-ruby (~> 1.0)
     io-console (0.8.2)
-    irb (1.15.3)
+    irb (1.16.0)
       pp (>= 0.6.0)
       rdoc (>= 4.0.0)
       reline (>= 0.4.2)
@@ -236,9 +236,10 @@ GEM
       net-smtp
     marcel (1.1.0)
     mini_mime (1.1.5)
-    minitest (5.27.0)
+    minitest (6.0.0)
+      prism (~> 1.5)
     msgpack (1.8.0)
-    net-imap (0.6.0)
+    net-imap (0.6.2)
       date
       net-protocol
     net-pop (0.1.2)
@@ -275,7 +276,8 @@ GEM
     pp (0.6.3)
       prettyprint
     prettyprint (0.2.0)
-    psych (5.3.0)
+    prism (1.7.0)
+    psych (5.3.1)
       date
       stringio
     public_suffix (7.0.0)
@@ -329,7 +331,7 @@ GEM
       tsort (>= 0.2)
       zeitwerk (~> 2.6)
     rake (13.3.1)
-    rdoc (6.17.0)
+    rdoc (7.0.3)
       erb
       psych (>= 4.0.0)
       tsort
@@ -369,9 +371,9 @@ GEM
     sentry-ruby (6.2.0)
       bigdecimal
       concurrent-ruby (~> 1.0, >= 1.0.2)
-    stringio (3.1.9)
+    stringio (3.2.0)
     thor (1.4.0)
-    timeout (0.5.0)
+    timeout (0.6.0)
     tsort (0.2.0)
     tzinfo (2.0.6)
       concurrent-ruby (~> 1.0)
@@ -394,7 +396,7 @@ GEM
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.5)
     yard (0.9.38)
-    zeitwerk (2.7.3)
+    zeitwerk (2.7.4)
 
 PLATFORMS
   aarch64-linux
@@ -439,7 +441,7 @@ DEPENDENCIES
   yard
 
 RUBY VERSION
-   ruby 3.4.6p54
+  ruby 3.4.8
 
 BUNDLED WITH
-   2.7.2
+  4.0.3
