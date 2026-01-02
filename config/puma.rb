@@ -36,6 +36,12 @@ port ENV.fetch("PORT", 3000)
 # Allow puma to be restarted by `bin/rails restart` command.
 plugin :tmp_restart
 
+# Activate control app for yabeda metrics collection
+activate_control_app unless ENV["RAILS_ENV"]&.match?(/test|cypress/)
+
+# Yabeda metrics collection (skip in test/cypress)
+plugin :yabeda unless ENV["RAILS_ENV"]&.match?(/test|cypress/)
+
 # Run the Solid Queue supervisor inside of Puma for single-server deployments.
 plugin :solid_queue if ENV["SOLID_QUEUE_IN_PUMA"]
 

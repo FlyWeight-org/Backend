@@ -31,6 +31,12 @@ gem "sentry-rails"
 gem "sentry-ruby"
 gem "vernier"
 
+# METRICS (production only - excluded from test/CI)
+gem "yabeda", group: %i[development production]
+gem "yabeda-prometheus", group: %i[development production]
+gem "yabeda-puma-plugin", group: %i[development production]
+gem "yabeda-rails", group: %i[development production]
+
 group :development do
   # LINT
   gem "brakeman", require: false

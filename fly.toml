@@ -43,6 +43,10 @@ console_command = '/rails/bin/rails console'
   cpu_kind = 'shared'
   cpus = 1
 
+[metrics]
+  port = 3000
+  path = '/metrics'
+
 [[statics]]
   guest_path = '/rails/public'
   url_prefix = '/'

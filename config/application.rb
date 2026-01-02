@@ -82,6 +82,8 @@ module Flyweight
         protocol: backend.scheme
     }
 
-    config.host_authorization = {exclude: ->(request) { request.path.start_with?("/up") }}
+    config.host_authorization = {
+        exclude: ->(request) { request.path.start_with?("/up") || request.path == "/metrics" }
+    }
   end
 end
