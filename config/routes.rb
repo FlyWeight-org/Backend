@@ -25,17 +25,13 @@ Rails.application.routes.draw do
     resources :loads, only: :create
   end
 
+  namespace :qstash do
+    post :purge_stale_flights, to: "tasks#purge_stale_flights"
+  end
+
   if Rails.env.cypress?
     get "__cypress__/reset" => Cypress::Reset.new
     get "__cypress__/last_email" => Cypress::LastEmail.new
-  end
-
-  if Rails.env.production?
-    authenticate :pilot, -> { it.admin? } do
-      mount GoodJob::Engine => "good_job"
-    end
-  else
-    mount GoodJob::Engine => "good_job"
   end
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.

@@ -26,10 +26,12 @@ such as:
 ```
 backend: cd Backend && rvm 4.0.1@flyweight exec rails server
 frontend: cd Frontend && yarn dev
-jobs: cd Backend && rvm 4.0.1@flyweight exec bundle exec good_job start
 anycable: cd Backend && rvm 4.0.1@flyweight exec anycable
 ws: cd Backend && rvm 4.0.1@flyweight exec bin/anycable-go --port=8080
 ```
+
+Scheduled tasks (daily flight purge) are driven by QStash in production.
+See `bin/qstash_setup` for schedule registration.
 
 Install the `foreman` gem to run the Procfile.
 

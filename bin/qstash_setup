@@ -1,0 +1,42 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+# Registers (or re-registers) QStash schedules for FlyWeight.
+# Idempotent: uses a stable Upstash-Schedule-Id per schedule, so re-runs upsert.
+#
+# Required env:
+#   QSTASH_TOKEN       - Bearer token from the Upstash QStash dashboard
+#
+# Optional env:
+#   QSTASH_URL         - Defaults to https://qstash.upstash.io
+#   QSTASH_TARGET_BASE - Destination origin. Defaults to the production URL.
+
+require "net/http"
+require "uri"
+require "json"
+
+TOKEN        = ENV.fetch("QSTASH_TOKEN")
+QSTASH_URL   = ENV.fetch("QSTASH_URL",        "https://qstash.upstash.io")
+TARGET_BASE  = ENV.fetch("QSTASH_TARGET_BASE", "https://app.flyweight.org")
+
+SCHEDULES = [
+  {
+    id:          "flyweight-purge-stale-flights",
+    destination: "#{TARGET_BASE}/qstash/purge_stale_flights",
+    cron:        "0 7 * * *" # 00:00 Pacific = 07:00 UTC
+  }
+].freeze
+
+SCHEDULES.each do |s|
+  uri = URI("#{QSTASH_URL}/v2/schedules/#{s[:destination]}")
+  req = Net::HTTP::Post.new(uri)
+  req["Authorization"]       = "Bearer #{TOKEN}"
+  req["Upstash-Cron"]        = s[:cron]
+  req["Upstash-Schedule-Id"] = s[:id]
+  req["Upstash-Method"]      = "POST"
+  req["Content-Type"]        = "application/json"
+  req.body = "{}"
+
+  res = Net::HTTP.start(uri.hostname, uri.port, use_ssl: true) { |h| h.request(req) }
+  puts "#{s[:id]} → #{s[:destination]} [#{s[:cron]}]: #{res.code} #{res.body}"
+end

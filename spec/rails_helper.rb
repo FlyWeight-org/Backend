@@ -69,5 +69,4 @@ RSpec.configure do |config|
   config.include Devise::Test::IntegrationHelpers, type: :request
   config.include Authentication, type: :request
   config.include Authentication, type: :channel
-  config.include ActiveJob::TestHelper
 end

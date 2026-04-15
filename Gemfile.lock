@@ -142,26 +142,14 @@ GEM
     dry-initializer (3.2.0)
     erb (6.0.2)
     erubi (1.13.1)
-    et-orbi (1.4.0)
-      tzinfo
     factory_bot (6.5.6)
       activesupport (>= 6.1.0)
     factory_bot_rails (6.5.1)
       factory_bot (~> 6.5)
       railties (>= 6.1.0)
     ffaker (2.25.0)
-    fugit (1.12.1)
-      et-orbi (~> 1.4)
-      raabro (~> 1.4)
     globalid (1.3.0)
       activesupport (>= 6.1)
-    good_job (4.13.3)
-      activejob (>= 6.1.0)
-      activerecord (>= 6.1.0)
-      concurrent-ruby (>= 1.3.1)
-      fugit (>= 1.11.0)
-      railties (>= 6.1.0)
-      thor (>= 1.0.0)
     google-protobuf (4.34.1)
       bigdecimal
       rake (~> 13.3)
@@ -288,7 +276,6 @@ GEM
     public_suffix (7.0.5)
     puma (7.2.0)
       nio4r (~> 2.0)
-    raabro (1.4.0)
     racc (1.8.1)
     rack (3.2.5)
     rack-cors (3.0.0)
@@ -444,9 +431,9 @@ DEPENDENCIES
   dockerfile-rails
   factory_bot_rails
   ffaker
-  good_job
   jbuilder
   json_expressions
+  jwt
   kredis
   pg
   puma

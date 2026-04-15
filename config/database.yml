@@ -22,3 +22,13 @@ production:
   <<: *default
   url: <%= ENV['DATABASE_URL'] %>
   database: flyweight_production
+  connect_timeout: 5
+  checkout_timeout: 10
+  idle_timeout: 300
+  reaping_frequency: 30
+  # Detect stale TCP connections quickly after Fly machine resume.
+  # Without these, a frozen socket can hang for 15+ minutes.
+  keepalives: 1
+  keepalives_idle: 5
+  keepalives_interval: 5
+  keepalives_count: 2
