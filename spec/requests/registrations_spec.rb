@@ -5,36 +5,34 @@ require "rails_helper"
 RSpec.describe "Account" do
   let(:current_password) { FFaker::Internet.password }
   let(:pilot) { create :pilot, password: current_password }
-  let(:pilot_params) { attributes_for(:pilot).merge(current_password:) }
 
   describe "POST /signup" do
-    let(:collection_path) { "/signup.json" }
-
-    it "creates a pilot" do
-      post collection_path,
-           params: {pilot: pilot_params}
-      expect(response).to have_http_status(:created)
-      expect(response.body).to match_json_expression(
-                                 name:  String,
-                                 email: String
-                               )
+    it "creates a pilot and returns tokens" do
+      post "/signup",
+           params: {login: "new@example.com", password: "securepass", name: "New Pilot"},
+           as:     :json
+      expect(response).to have_http_status(:success)
+      body = response.parsed_body
+      expect(body["name"]).to eq("New Pilot")
+      expect(body["email"]).to eq("new@example.com")
+      expect(body["passkeys"]).to eq([])
+      expect(body["access_token"]).to be_present
+      expect(body["refresh_token"]).to be_present
     end
 
     it "handles validation errors" do
-      post collection_path,
-           params: {pilot: pilot_params.merge(name: " ")}
+      post "/signup",
+           params: {login: "invalid", password: "securepass", name: "Test"},
+           as:     :json
       expect(response).to have_http_status(:unprocessable_content)
-      expect(response.body).to match_json_expression(errors: {
-                                                         name: [String]
-                                                     })
+      body = response.parsed_body
+      expect(body["error"]).to be_present
     end
   end
 
   describe "GET /account" do
-    let(:collection_path) { "/account.json" }
-
     it "requires an authenticated user" do
-      get collection_path
+      get "/account", as: :json
       expect(response).to have_http_status(:unauthorized)
     end
 
@@ -42,23 +40,22 @@ RSpec.describe "Account" do
       before(:each) { sign_in pilot }
 
       it "responds with pilot information" do
-        get collection_path
+        get "/account", as: :json
 
         expect(response).to have_http_status(:success)
-        expect(response.body).to match_json_expression({
-                                                           name:  String,
-                                                           email: String
-                                                       })
+        body = response.parsed_body
+        expect(body["name"]).to eq(pilot.name)
+        expect(body["email"]).to eq(pilot.email)
+        expect(body["passkeys"]).to eq([])
       end
     end
   end
 
   describe "PUT /account" do
-    let(:collection_path) { "/account.json" }
-
     it "requires an authenticated user" do
-      put collection_path,
-          params: {pilot: pilot_params}
+      put "/account",
+          params: {pilot: {name: "Updated"}},
+          as:     :json
       expect(response).to have_http_status(:unauthorized)
     end
 
@@ -66,32 +63,31 @@ RSpec.describe "Account" do
       before(:each) { sign_in pilot }
 
       it "updates a pilot" do
-        put collection_path,
-            params: {pilot: pilot_params}
+        new_email = "updated@example.com"
+        put "/account",
+            params: {pilot: {name: "Updated Name", email: new_email}},
+            as:     :json
         expect(response).to have_http_status(:success)
-        expect(response.body).to match_json_expression({
-                                                           name:  String,
-                                                           email: String
-                                                       })
-        expect(pilot.reload.email).to eq(pilot_params[:email])
+        body = response.parsed_body
+        expect(body["name"]).to eq("Updated Name")
+        expect(body["email"]).to eq(new_email)
+        expect(pilot.reload.email).to eq(new_email)
       end
 
       it "handles validation errors" do
-        put collection_path,
-            params: {pilot: pilot_params.merge(email: " ")}
+        put "/account",
+            params: {pilot: {email: " "}},
+            as:     :json
         expect(response).to have_http_status(:unprocessable_content)
-        expect(response.body).to match_json_expression(errors: {
-                                                           email: [String]
-                                                       })
+        body = response.parsed_body
+        expect(body["errors"]["email"]).to be_present
       end
     end
   end
 
   describe "DELETE /account" do
-    let(:collection_path) { "/account.json" }
-
     it "requires an authenticated user" do
-      delete collection_path
+      delete "/account", as: :json
       expect(response).to have_http_status(:unauthorized)
     end
 
@@ -99,7 +95,7 @@ RSpec.describe "Account" do
       before(:each) { sign_in pilot }
 
       it "deletes a pilot" do
-        delete collection_path
+        delete "/account", as: :json
         expect(response).to have_http_status(:no_content)
         expect { pilot.reload }.to raise_error(ActiveRecord::RecordNotFound)
       end

@@ -24,10 +24,10 @@ To run the server in development mode, you can create a `Procfile` with contents
 such as:
 
 ```
-backend: cd Backend && rvm 4.0.1@flyweight exec rails server
+backend: cd Backend && rvm 4.0.2@flyweight exec rails server
 frontend: cd Frontend && yarn dev
-anycable: cd Backend && rvm 4.0.1@flyweight exec anycable
-ws: cd Backend && rvm 4.0.1@flyweight exec bin/anycable-go --port=8080
+anycable: cd Backend && rvm 4.0.2@flyweight exec anycable
+ws: cd Backend && rvm 4.0.2@flyweight exec bin/anycable-go --port=8080
 ```
 
 Scheduled tasks (daily flight purge) are driven by QStash in production.

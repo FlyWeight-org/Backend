@@ -17,22 +17,13 @@ require "application_responder"
 
 class ApplicationController < ActionController::API
   include ActionController::MimeResponds
+  include RodauthAuthentication
 
   self.responder = ApplicationResponder
   respond_to :json
 
   rescue_from StandardError, with: :other_error
   rescue_from ActiveRecord::RecordNotFound, with: :not_found
-
-  before_action :configure_permitted_parameters, if: :devise_controller?
-
-  protected
-
-  # @private
-  def configure_permitted_parameters
-    devise_parameter_sanitizer.permit(:sign_up, keys: %i[name])
-    devise_parameter_sanitizer.permit(:account_update, keys: %i[name])
-  end
 
   private
 

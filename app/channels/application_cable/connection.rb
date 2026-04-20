@@ -13,14 +13,17 @@ module ApplicationCable
 
   class Connection < ActionCable::Connection::Base
 
-    # @return [String] The pilot's JSON web token.
+    # @return [Hash] The decoded JWT payload.
     attr_reader :jwt
 
     identified_by :current_pilot
 
     # @private
     def connect
-      (@jwt = token_decoder.call(request.params[:jwt])) or reject_unauthorized_connection
+      token = request.params[:jwt]
+      reject_unauthorized_connection unless token
+
+      @jwt = decode_jwt(token)
       self.current_pilot = find_verified_pilot
     rescue ActiveRecord::RecordNotFound, JWT::DecodeError
       reject_unauthorized_connection
@@ -30,8 +33,9 @@ module ApplicationCable
 
     def find_verified_pilot = Pilot.find_by!(email: jwt["e"])
 
-    def token_decoder
-      @token_decoder ||= Warden::JWTAuth::TokenDecoder.new
+    def decode_jwt(token)
+      secret = Rails.application.credentials.devise_jwt_secret
+      JWT.decode(token, secret, true, algorithm: "HS256").first
     end
   end
 end
