@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require "active_support/core_ext/integer/time"
+require_relative "../../app/middleware/verify_database_connection"
 
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
@@ -78,4 +79,7 @@ Rails.application.configure do
   config.hosts = %w[flyweight.org app.flyweight.org]
   # Skip DNS rebinding protection for the default health check endpoint.
   # config.host_authorization = { exclude: ->(request) { request.path == "/up" } }
+
+  # Reconnect to Postgres if the pooled socket died during Fly suspend.
+  config.middleware.use VerifyDatabaseConnection
 end
