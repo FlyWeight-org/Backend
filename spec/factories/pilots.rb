@@ -5,5 +5,6 @@ FactoryBot.define do
     name { FFaker::Name.name }
     sequence(:email) { |i| "email-#{i}@example.com" }
     password { FFaker::Internet.password }
+    status_id { 2 }
   end
 end

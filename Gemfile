@@ -13,12 +13,15 @@ gem "responders"
 
 # FRAMEWORK
 gem "anycable-rails"
-gem "devise"
-gem "devise-jwt"
+gem "bcrypt"
 gem "jwt"
 gem "kredis"
 gem "rack-cors"
 gem "redis"
+gem "rodauth-rails"
+gem "sequel-activerecord_connection"
+gem "tilt"
+gem "webauthn"
 
 # MODELS
 gem "pg"

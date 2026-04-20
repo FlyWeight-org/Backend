@@ -25,6 +25,10 @@ class Cypress::Reset
   def reset_cypress
     models.each { truncate it }
     ActionMailer::Base.deliveries.clear
+    return unless defined?(Rack::Attack)
+
+    Rack::Attack.cache.store = ActiveSupport::Cache::MemoryStore.new
+    Rack::Attack.cache.store.clear
   end
 
   def response(flight) = [200, {"Content-Type" => "text/plain"}, [flight.uuid]]
@@ -36,9 +40,11 @@ class Cypress::Reset
   end
 
   def create_pilot
-    Pilot.create! email:    "cypress@example.com",
-                  password: "supersecret",
-                  name:     "Cypress User"
+    pilot = Pilot.create! email:    "cypress@example.com",
+                          password: "supersecret",
+                          name:     "Cypress User"
+    pilot.update! status_id: 2
+    pilot
   end
 
   def create_flight(pilot)

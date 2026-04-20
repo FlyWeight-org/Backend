@@ -2,60 +2,49 @@
 
 require "rails_helper"
 
-RSpec.describe "/password_resets" do
+RSpec.describe "/password-resets" do
   let(:pilot) { create :pilot }
 
-  let(:collection_path) { "/password_resets.json" }
-
-  describe "POST /" do
-    it "generates a password-reset link" do
-      post collection_path,
-           params: {pilot: {email: pilot.email}}
+  describe "POST /password-resets" do
+    it "sends a password-reset email" do
+      post "/password-resets",
+           params: {login: pilot.email},
+           as:     :json
       expect(response).to have_http_status(:no_content)
+      expect(ActionMailer::Base.deliveries.last).to be_present
     end
 
-    it "does nothing if the email does not exist" do
-      post collection_path,
-           params: {pilot: {email: "nonexistent@example.com"}}
+    it "returns 204 even if the email does not exist" do
+      post "/password-resets",
+           params: {login: "nonexistent@example.com"},
+           as:     :json
       expect(response).to have_http_status(:no_content)
     end
   end
 
-  describe "PUT /" do
+  describe "POST /reset-password" do
     before(:each) do
-      post collection_path,
-           params: {pilot: {email: pilot.email}}
-      body   = ActionMailer::Base.deliveries.first.body.decoded
-      @token = body.match(%r{"http://test\.host/reset-password\?reset_password_token=(.+?)"})[1]
+      post "/password-resets",
+           params: {login: pilot.email},
+           as:     :json
+      body   = ActionMailer::Base.deliveries.last.body.decoded
+      @token = body.match(/key=(.+?)(?:\s|$)/)[1]
     end
 
     it "resets the password" do
-      put collection_path,
-          params: {
-              pilot: {
-                  reset_password_token:  @token,
-                  password:              "newpass",
-                  password_confirmation: "newpass"
-              }
-          }
-      expect(response).to have_http_status(:no_content)
-      expect { pilot.reload }.to change(pilot, :encrypted_password)
+      post "/reset-password",
+           params: {key: @token, password: "newpass1!"},
+           as:     :json
+      expect(response).to have_http_status(:success)
+      expect { pilot.reload }.to change(pilot, :password_hash)
     end
 
-    it "does not reset the password given an invalid token" do
-      put collection_path,
-          params: {
-              pilot: {
-                  reset_password_token:  @token,
-                  password:              "newpass",
-                  password_confirmation: "different"
-              }
-          }
-      expect(response).to have_http_status(:unprocessable_content)
-      expect(response.body).to match_json_expression(errors: {
-                                                         password_confirmation: [String]
-                                                     })
-      expect { pilot.reload }.not_to change(pilot, :encrypted_password)
+    it "rejects an invalid token" do
+      post "/reset-password",
+           params: {key: "invalid_token", password: "newpass1!"},
+           as:     :json
+      expect(response).to have_http_status(:unauthorized)
+      expect { pilot.reload }.not_to change(pilot, :password_hash)
     end
   end
 end
