@@ -127,7 +127,7 @@ GEM
       rails (>= 3.0.0)
     drb (2.2.3)
     dry-initializer (3.2.0)
-    erb (6.0.3)
+    erb (6.0.4)
     erubi (1.13.1)
     factory_bot (6.5.6)
       activesupport (>= 6.1.0)
@@ -213,7 +213,7 @@ GEM
       net-smtp
     marcel (1.1.0)
     mini_mime (1.1.5)
-    minitest (6.0.4)
+    minitest (6.0.5)
       drb (~> 2.0)
       prism (~> 1.5)
     msgpack (1.8.0)
@@ -472,7 +472,7 @@ DEPENDENCIES
   yard
 
 RUBY VERSION
-  ruby 4.0.2
+  ruby 4.0.3
 
 BUNDLED WITH
   4.0.10
