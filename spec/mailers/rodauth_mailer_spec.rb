@@ -34,12 +34,12 @@ RSpec.describe RodauthMailer do
   describe "#verify_account" do
     let(:mail) { described_class.verify_account(email, link) }
 
-    include_examples "a multipart email", "Verify your FlyWeight account"
+    it_behaves_like "a multipart email", "Verify your FlyWeight account"
   end
 
   describe "#reset_password" do
     let(:mail) { described_class.reset_password(email, link) }
 
-    include_examples "a multipart email", "Reset your FlyWeight password"
+    it_behaves_like "a multipart email", "Reset your FlyWeight password"
   end
 end

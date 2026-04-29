@@ -3,11 +3,11 @@
 class RodauthMailer < ApplicationMailer
   def verify_account(email, link)
     @link = link
-    mail(to: email, subject: "Verify your FlyWeight account")
+    mail(to: email, subject: I18n.t("rodauth_mailer.verify_account.subject"))
   end
 
   def reset_password(email, link)
     @link = link
-    mail(to: email, subject: "Reset your FlyWeight password")
+    mail(to: email, subject: I18n.t("rodauth_mailer.reset_password.subject"))
   end
 end
