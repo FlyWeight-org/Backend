@@ -11,6 +11,7 @@ class RodauthApp < Rodauth::Rails::App
     # ── Features ──────────────────────────────────────────────────────────
 
     enable :login, :logout, :create_account, :close_account,
+           :verify_account,
            :reset_password, :change_password, :change_login,
            :jwt, :jwt_refresh,
            :webauthn, :webauthn_login, :webauthn_autofill
@@ -30,6 +31,7 @@ class RodauthApp < Rodauth::Rails::App
     login_route "login"
     logout_route "logout"
     create_account_route "signup"
+    verify_account_route "verify-account"
     reset_password_request_route "password-resets"
     reset_password_route "reset-password"
     # jwt_refresh_route uses default "jwt-refresh"
@@ -54,6 +56,13 @@ class RodauthApp < Rodauth::Rails::App
       h = super()
       h["e"] = account[:email] if account
       h
+    end
+
+    # Suppress the empty JWT that Rodauth would otherwise emit when the
+    # session contains no account_id (e.g. after an unverified signup or
+    # a failed login attempt).
+    set_jwt_token do |token|
+      super(token) if session[session_key]
     end
 
     # ── JWT refresh keys table ────────────────────────────────────────────
@@ -86,6 +95,14 @@ class RodauthApp < Rodauth::Rails::App
       "Reset your password: #{frontend}/reset-password?key=#{token}"
     end
 
+    verify_account_email_subject "Verify your FlyWeight account"
+    verify_account_email_body do
+      frontend = Rails.application.config.urls.frontend
+      token_key = convert_email_token_key(verify_account_key_value)
+      token = "#{account_id}#{token_separator}#{token_key}"
+      "Verify your FlyWeight account: #{frontend}/verify-account?key=#{token}"
+    end
+
     # ── WebAuthn ──────────────────────────────────────────────────────────
 
     webauthn_origin { Rails.application.config.urls.frontend }
@@ -106,14 +123,17 @@ class RodauthApp < Rodauth::Rails::App
       account[:updated_at] = Time.current
     end
 
-    create_account_autologin? true
+    # :verify_account suppresses autologin until the account is verified.
+    create_account_autologin? false
+    # Password is captured at signup, not at verification time.
+    verify_account_set_password? false
 
     # ── Account closure ───────────────────────────────────────────────────
 
     delete_account_on_close? true
 
     # ── Response customization ────────────────────────────────────────────
-    # Add pilot profile data to login and signup responses.
+    # Add pilot profile data to the login response.
 
     after_login do
       pilot = Pilot.find(account_id)
@@ -122,13 +142,6 @@ class RodauthApp < Rodauth::Rails::App
       json_response["passkeys"] = pilot.webauthn_keys.order(:last_use).map do |k|
         {"id" => k.webauthn_id, "label" => k.label, "last_used_at" => k.last_use}
       end
-    end
-
-    after_create_account do
-      pilot = Pilot.find(account_id)
-      json_response["name"] = pilot.name
-      json_response["email"] = pilot.email
-      json_response["passkeys"] = []
     end
 
     # Apply an optional label to a newly registered passkey.

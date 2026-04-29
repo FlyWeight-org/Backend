@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_04_16_000005) do
+ActiveRecord::Schema[8.1].define(version: 2026_04_28_231723) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -26,6 +26,12 @@ ActiveRecord::Schema[8.1].define(version: 2026_04_16_000005) do
     t.datetime "deadline", null: false
     t.datetime "email_last_sent", default: -> { "CURRENT_TIMESTAMP" }, null: false
     t.string "key", null: false
+  end
+
+  create_table "account_verification_keys", force: :cascade do |t|
+    t.datetime "email_last_sent", default: -> { "CURRENT_TIMESTAMP" }, null: false
+    t.string "key", null: false
+    t.datetime "requested_at", default: -> { "CURRENT_TIMESTAMP" }, null: false
   end
 
   create_table "account_webauthn_keys", primary_key: ["account_id", "webauthn_id"], force: :cascade do |t|
@@ -71,13 +77,14 @@ ActiveRecord::Schema[8.1].define(version: 2026_04_16_000005) do
     t.string "email", default: "", null: false
     t.string "name", null: false
     t.string "password_hash"
-    t.integer "status_id", default: 2, null: false
+    t.integer "status_id", default: 1, null: false
     t.datetime "updated_at", null: false
     t.index ["email"], name: "index_pilots_on_email", unique: true
   end
 
   add_foreign_key "account_jwt_refresh_keys", "pilots", on_delete: :cascade
   add_foreign_key "account_password_reset_keys", "pilots", column: "id", on_delete: :cascade
+  add_foreign_key "account_verification_keys", "pilots", column: "id", on_delete: :cascade
   add_foreign_key "account_webauthn_keys", "pilots", column: "account_id", on_delete: :cascade
   add_foreign_key "account_webauthn_user_ids", "pilots", column: "id", on_delete: :cascade
   add_foreign_key "flights", "pilots", on_delete: :cascade
