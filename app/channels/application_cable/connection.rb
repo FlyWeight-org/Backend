@@ -34,7 +34,7 @@ module ApplicationCable
     def find_verified_pilot = Pilot.find_by!(email: jwt["e"])
 
     def decode_jwt(token)
-      secret = Rails.application.credentials.devise_jwt_secret
+      secret = Rails.application.credentials.jwt_secret
       JWT.decode(token, secret, true, algorithm: "HS256").first
     end
   end
