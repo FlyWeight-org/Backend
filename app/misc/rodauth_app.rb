@@ -98,12 +98,31 @@ class RodauthApp < Rodauth::Rails::App
     webauthn_keys_sign_count_column :sign_count
     webauthn_keys_last_use_column :last_use
 
+    # ── Turnstile (Cloudflare CAPTCHA) ────────────────────────────────────
+
+    require_turnstile = -> do
+      next if Rails.env.test?
+
+      token = param_or_nil("turnstile_token")
+      unless TurnstileVerifier.verify(token, request.ip).success?
+        response.status = 400
+        response["Content-Type"] = "application/json"
+        response.write({"error" => "captcha verification failed"}.to_json)
+        request.halt
+      end
+    end
+
     # ── Account creation ──────────────────────────────────────────────────
 
     before_create_account do
+      instance_exec(&require_turnstile)
       account[:name] = param("name")
       account[:created_at] = Time.current
       account[:updated_at] = Time.current
+    end
+
+    before_login do
+      instance_exec(&require_turnstile)
     end
 
     create_account_autologin? true
@@ -145,6 +164,7 @@ class RodauthApp < Rodauth::Rails::App
     # Always return 204 regardless of whether the email exists.
     before_reset_password_request_route do
       if request.post?
+        instance_exec(&require_turnstile)
         if (login = param_or_nil(login_param)) && account_from_login(login) && open_account? && !reset_password_email_recently_sent?
           generate_reset_password_key_value
           transaction do
