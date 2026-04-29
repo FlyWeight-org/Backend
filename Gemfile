@@ -30,6 +30,9 @@ gem "pg"
 # VIEWS
 gem "jbuilder"
 
+# MAIL
+gem "resend"
+
 # ERRORS
 gem "sentry-rails"
 gem "sentry-ruby"
