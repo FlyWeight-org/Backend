@@ -267,6 +267,8 @@ GEM
       nio4r (~> 2.0)
     racc (1.8.1)
     rack (3.2.6)
+    rack-attack (6.8.0)
+      rack (>= 1.0, < 4)
     rack-cors (3.0.0)
       logger
       rack (>= 3.0.14)
@@ -450,6 +452,7 @@ DEPENDENCIES
   kredis
   pg
   puma
+  rack-attack
   rack-cors
   rails
   rails-controller-testing
