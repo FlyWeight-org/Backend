@@ -27,8 +27,9 @@ RSpec.describe "/password-resets" do
       post "/password-resets",
            params: {login: pilot.email},
            as:     :json
-      body   = ActionMailer::Base.deliveries.last.body.decoded
-      @token = body.match(/key=(.+?)(?:\s|$)/)[1]
+      mail   = ActionMailer::Base.deliveries.last
+      body   = mail.text_part&.body&.decoded || mail.html_part&.body&.decoded || mail.body.decoded
+      @token = body.match(/key=([^\s"<]+)/)[1]
     end
 
     it "resets the password" do
