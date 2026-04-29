@@ -45,7 +45,7 @@ class RodauthApp < Rodauth::Rails::App
 
     # ── JWT ───────────────────────────────────────────────────────────────
 
-    jwt_secret Rails.application.credentials.devise_jwt_secret
+    jwt_secret Rails.application.credentials.jwt_secret
     jwt_access_token_period 900 # 15 minutes
     jwt_refresh_token_deadline_interval days: 30
 
