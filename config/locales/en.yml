@@ -22,6 +22,11 @@ en:
   application_controller:
     errors:
       internal_server_error: An internal error has occurred.
+  rodauth_mailer:
+    verify_account:
+      subject: Verify your FlyWeight account
+    reset_password:
+      subject: Reset your FlyWeight password
   errors:
     messages:
       accepted: must be accepted
