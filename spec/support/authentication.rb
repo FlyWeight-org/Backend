@@ -11,7 +11,7 @@ module Authentication
         "e"          => pilot.email,
         "exp"        => 1.hour.from_now.to_i
     }
-    JWT.encode(payload, Rails.application.credentials.devise_jwt_secret, "HS256")
+    JWT.encode(payload, Rails.application.credentials.jwt_secret, "HS256")
   end
 
   # Automatically injects the Authorization header on all subsequent
