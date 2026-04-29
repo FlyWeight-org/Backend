@@ -100,8 +100,9 @@ class RodauthApp < Rodauth::Rails::App
 
     # ── Turnstile (Cloudflare CAPTCHA) ────────────────────────────────────
 
-    require_turnstile = lambda do
+    require_turnstile = -> do
       next if Rails.env.test?
+
       token = param_or_nil("turnstile_token")
       unless TurnstileVerifier.verify(token, request.ip).success?
         response.status = 400

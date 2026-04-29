@@ -9,13 +9,11 @@ class TurnstileVerifier
 
   def self.verify(token, remote_ip)
     secret = ENV.fetch("TURNSTILE_SECRET_KEY") do
-      if Rails.env.development? || Rails.env.test? || Rails.env.cypress?
-        "1x0000000000000000000000000000000AA" # Cloudflare always-passes test secret
-      else
-        raise "TURNSTILE_SECRET_KEY missing"
-      end
+      raise "TURNSTILE_SECRET_KEY missing" unless Rails.env.local? || Rails.env.cypress?
+
+      "1x0000000000000000000000000000000AA" # Cloudflare always-passes test secret
     end
-    return Result.new(success?: false, error_codes: ["missing-input-response"]) if token.blank?
+    return Result.new(success?: false, error_codes: %w[missing-input-response]) if token.blank?
 
     http = Net::HTTP.new(ENDPOINT.host, ENDPOINT.port)
     http.use_ssl = true
@@ -26,8 +24,8 @@ class TurnstileVerifier
     res = http.request(req)
     data = JSON.parse(res.body)
     Result.new(success?: data["success"] == true, error_codes: data["error-codes"] || [])
-  rescue => e
+  rescue StandardError => e
     Sentry.add_breadcrumb(Sentry::Breadcrumb.new(category: "turnstile", message: e.message)) if defined?(Sentry)
-    Result.new(success?: false, error_codes: ["network-error"])
+    Result.new(success?: false, error_codes: %w[network-error])
   end
 end
