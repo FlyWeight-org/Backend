@@ -16,6 +16,10 @@ RSpec.describe "/verify-account" do
     ActiveRecord::Base.connection.select_all("SELECT * FROM account_verification_keys")
   end
 
+  def verification_key_count
+    verification_keys.count
+  end
+
   def token_from_last_email
     body = ActionMailer::Base.deliveries.last.body.decoded
     body.match(/key=([^\s]+)/)[1]
@@ -24,7 +28,7 @@ RSpec.describe "/verify-account" do
   describe "POST /signup" do
     it "creates an unverified pilot and a verification key, with no JWT in the response" do
       expect { signup }.to change(Pilot, :count).by(1).
-          and change { verification_keys.count }.by(1)
+          and change(self, :verification_key_count).by(1)
 
       expect(response).to have_http_status(:success)
       pilot = Pilot.find_by!(email: email)
@@ -62,7 +66,7 @@ RSpec.describe "/verify-account" do
   describe "POST /verify-account" do
     let(:pilot) { Pilot.find_by!(email: email) }
 
-    before { signup }
+    before(:each) { signup }
 
     it "verifies the account and removes the verification key" do
       post "/verify-account", params: {key: token_from_last_email}, as: :json
