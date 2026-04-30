@@ -33,5 +33,16 @@ RSpec.describe "POST /login with Turnstile" do
       expect(response).to have_http_status(:bad_request)
       expect(response.parsed_body["access_token"]).to be_blank
     end
+
+    # Regression: previously the Turnstile check fired in `before_login`,
+    # which Rodauth only runs after a successful password match. A bot
+    # could POST /login with any email that doesn't exist and get the
+    # standard "no matching login" 401 without ever solving the captcha,
+    # turning /login into a free account-enumeration oracle.
+    it "rejects with captcha error before Rodauth's account lookup runs" do
+      post "/login", params: {login: "nobody@example.com", password: "x", turnstile_token: "bad"}, as: :json
+      expect(response).to have_http_status(:bad_request)
+      expect(response.parsed_body["error"]).to eq("captcha verification failed")
+    end
   end
 end
