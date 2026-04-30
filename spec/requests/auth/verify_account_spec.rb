@@ -21,8 +21,9 @@ RSpec.describe "/verify-account" do
   end
 
   def token_from_last_email
-    body = ActionMailer::Base.deliveries.last.body.decoded
-    body.match(/key=([^\s]+)/)[1]
+    mail = ActionMailer::Base.deliveries.last
+    body = mail.text_part&.body&.decoded || mail.html_part&.body&.decoded || mail.body.decoded
+    body.match(/key=([^\s"<]+)/)[1]
   end
 
   describe "POST /signup" do
@@ -43,7 +44,8 @@ RSpec.describe "/verify-account" do
       mail = ActionMailer::Base.deliveries.last
       expect(mail).to be_present
       expect(mail.subject).to eq("Verify your FlyWeight account")
-      expect(mail.body.decoded).to include("/verify-account?key=")
+      expect(mail.text_part.body.decoded).to include("/verify-account?key=")
+      expect(mail.html_part.body.decoded).to include("/verify-account?key=")
     end
   end
 

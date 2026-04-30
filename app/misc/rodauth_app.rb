@@ -88,19 +88,21 @@ class RodauthApp < Rodauth::Rails::App
 
     email_from "donotreply@flyweight.org"
 
-    reset_password_email_body do
+    send_reset_password_email do
       frontend = Rails.application.config.urls.frontend
       token_key = convert_email_token_key(reset_password_key_value)
       token = "#{account_id}#{token_separator}#{token_key}"
-      "Reset your password: #{frontend}/reset-password?key=#{token}"
+      link = "#{frontend}/reset-password?key=#{token}"
+      RodauthMailer.reset_password(account[:email], link).deliver_now
     end
 
     verify_account_email_subject "Verify your FlyWeight account"
-    verify_account_email_body do
+    send_verify_account_email do
       frontend = Rails.application.config.urls.frontend
       token_key = convert_email_token_key(verify_account_key_value)
       token = "#{account_id}#{token_separator}#{token_key}"
-      "Verify your FlyWeight account: #{frontend}/verify-account?key=#{token}"
+      link = "#{frontend}/verify-account?key=#{token}"
+      RodauthMailer.verify_account(account[:email], link).deliver_now
     end
 
     # ── WebAuthn ──────────────────────────────────────────────────────────
