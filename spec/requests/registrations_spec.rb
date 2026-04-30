@@ -7,17 +7,17 @@ RSpec.describe "Account" do
   let(:pilot) { create :pilot, password: current_password }
 
   describe "POST /signup" do
-    it "creates a pilot and returns tokens" do
+    it "creates an unverified pilot without returning tokens" do
       post "/signup",
            params: {login: "new@example.com", password: "securepass", name: "New Pilot"},
            as:     :json
       expect(response).to have_http_status(:success)
+      pilot = Pilot.find_by!(email: "new@example.com")
+      expect(pilot.name).to eq("New Pilot")
+      expect(pilot.status_id).to eq(1)
       body = response.parsed_body
-      expect(body["name"]).to eq("New Pilot")
-      expect(body["email"]).to eq("new@example.com")
-      expect(body["passkeys"]).to eq([])
-      expect(body["access_token"]).to be_present
-      expect(body["refresh_token"]).to be_present
+      expect(body["access_token"]).to be_blank
+      expect(body["refresh_token"]).to be_blank
     end
 
     it "handles validation errors" do

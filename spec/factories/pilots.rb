@@ -6,5 +6,9 @@ FactoryBot.define do
     sequence(:email) { |i| "email-#{i}@example.com" }
     password { FFaker::Internet.password }
     status_id { 2 }
+
+    trait :unverified do
+      status_id { 1 }
+    end
   end
 end
