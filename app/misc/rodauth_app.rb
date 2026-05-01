@@ -131,17 +131,26 @@ class RodauthApp < Rodauth::Rails::App
       end
     end
 
+    # ── Captcha gates ────────────────────────────────────────────────────
+    # Use *_route hooks so the captcha is required before Rodauth's account
+    # lookup. Otherwise a bot can submit a nonexistent or already-taken
+    # email, get the standard 401/422 back, and never need to solve the
+    # widget — turning these endpoints into a free enumeration oracle.
+
+    before_create_account_route do
+      instance_exec(&require_turnstile) if request.post?
+    end
+
+    before_login_route do
+      instance_exec(&require_turnstile) if request.post?
+    end
+
     # ── Account creation ──────────────────────────────────────────────────
 
     before_create_account do
-      instance_exec(&require_turnstile)
       account[:name] = param("name")
       account[:created_at] = Time.current
       account[:updated_at] = Time.current
-    end
-
-    before_login do
-      instance_exec(&require_turnstile)
     end
 
     # :verify_account suppresses autologin until the account is verified.

@@ -35,5 +35,18 @@ RSpec.describe "POST /signup with Turnstile" do
       body = response.parsed_body
       expect(body["error"] || body["field-error"]).to be_present
     end
+
+    # Regression: previously the Turnstile check fired in `before_create_account`,
+    # which Rodauth only runs after all signup validations pass. A bot could
+    # POST /signup with an already-taken email and get a 422 "already an
+    # account" response without ever solving the captcha, turning /signup
+    # into an enumeration oracle for known accounts.
+    it "rejects with captcha error before Rodauth's already-taken check runs" do
+      existing = create :pilot
+      dup_params = {login: existing.email, password: "securepass", name: "Dup", turnstile_token: "bad"}
+      post "/signup", params: dup_params, as: :json
+      expect(response).to have_http_status(:bad_request)
+      expect(response.parsed_body["error"]).to eq("captcha verification failed")
+    end
   end
 end
