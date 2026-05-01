@@ -2,6 +2,7 @@
 
 require "active_support/core_ext/integer/time"
 require_relative "../../app/middleware/verify_database_connection"
+require_relative "../../app/middleware/verify_redis_connection"
 
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
