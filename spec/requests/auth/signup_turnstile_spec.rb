@@ -43,9 +43,8 @@ RSpec.describe "POST /signup with Turnstile" do
     # into an enumeration oracle for known accounts.
     it "rejects with captcha error before Rodauth's already-taken check runs" do
       existing = create :pilot
-      post "/signup",
-          params: {login: existing.email, password: "securepass", name: "Dup", turnstile_token: "bad"},
-          as:     :json
+      dup_params = {login: existing.email, password: "securepass", name: "Dup", turnstile_token: "bad"}
+      post "/signup", params: dup_params, as: :json
       expect(response).to have_http_status(:bad_request)
       expect(response.parsed_body["error"]).to eq("captcha verification failed")
     end
