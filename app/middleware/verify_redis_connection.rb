@@ -23,14 +23,19 @@ class VerifyRedisConnection
   end
 
   def call(env)
-    if !SKIP_PATHS.include?(env["PATH_INFO"]) && Rack::Attack.cache.store.is_a?(ActiveSupport::Cache::RedisCacheStore)
-      begin
-        Rack::Attack.cache.store.redis.ping
-      rescue StandardError => e
-        Sentry.capture_message("Redis ping failed: #{e.class.name}: #{e.message}") if defined?(Sentry)
-      end
-    end
+    ping_redis unless SKIP_PATHS.include?(env["PATH_INFO"])
     @app.call(env)
+  end
+
+  private
+
+  def ping_redis
+    store = Rack::Attack.cache.store
+    return unless store.kind_of?(ActiveSupport::Cache::RedisCacheStore)
+
+    store.redis.ping
+  rescue StandardError => e
+    Sentry.capture_message("Redis ping failed: #{e.class.name}: #{e.message}") if defined?(Sentry)
   end
 
 end
