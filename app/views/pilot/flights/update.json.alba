@@ -1,0 +1,2 @@
+# frozen_string_literal: true
+FlightSerializer.new(@flight, params: { can_edit: true, include_loads: true }).serialize

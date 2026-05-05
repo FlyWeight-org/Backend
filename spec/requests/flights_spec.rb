@@ -27,7 +27,7 @@ RSpec.describe "/flights" do
         get record_path
 
         expect(response).to be_successful
-        expect(response.body).to match_json_expression(
+        expect(response.body).to match_json(
                                    uuid:        String,
                                    date:        String,
                                    description: String,
@@ -46,7 +46,7 @@ RSpec.describe "/flights" do
         get record_path
 
         expect(response).to be_successful
-        expect(response.body).to match_json_expression(
+        expect(response.body).to match_json(
                                    uuid:        String,
                                    date:        String,
                                    description: String,
@@ -65,7 +65,7 @@ RSpec.describe "/flights" do
         get record_path
 
         expect(response).to be_successful
-        expect(response.body).to match_json_expression(
+        expect(response.body).to match_json(
                                    uuid:        String,
                                    date:        String,
                                    description: String,

@@ -34,7 +34,7 @@ RSpec.describe "/pilot/flights" do
 
         expect(response).to be_successful
         expect(response.body).
-            to match_json_expression([{
+            to match_json([{
                 uuid:            String,
                 date:            String,
                 description:     String,
@@ -59,7 +59,7 @@ RSpec.describe "/pilot/flights" do
              params: {flight: flight_params}
 
         expect(response).to be_successful
-        expect(response.body).to match_json_expression(
+        expect(response.body).to match_json(
                                    uuid:        String,
                                    date:        String,
                                    description: String,
@@ -78,7 +78,7 @@ RSpec.describe "/pilot/flights" do
              params: {flight: flight_params.merge(date: " ")}
 
         expect(response).to have_http_status(:unprocessable_content)
-        expect(response.body).to match_json_expression(errors: {date: [String]})
+        expect(response.body).to match_json(errors: {date: [String]})
       end
     end
   end
@@ -110,7 +110,7 @@ RSpec.describe "/pilot/flights" do
             params: {flight: flight_params}
 
         expect(response).to be_successful
-        expect(response.body).to match_json_expression(
+        expect(response.body).to match_json(
                                    uuid:        String,
                                    date:        String,
                                    description: String,
@@ -134,7 +134,7 @@ RSpec.describe "/pilot/flights" do
              params: {flight: flight_params.merge(date: " ")}
 
         expect(response).to have_http_status(:unprocessable_content)
-        expect(response.body).to match_json_expression(errors: {date: [String]})
+        expect(response.body).to match_json(errors: {date: [String]})
       end
     end
   end

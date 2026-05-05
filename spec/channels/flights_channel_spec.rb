@@ -19,7 +19,7 @@ RSpec.describe FlightsChannel do
   it "streams flight creates" do
     expect { create :flight, pilot: }.
         to(have_broadcasted_to(pilot).with do |payload|
-             expect(payload).to match_json_expression(
+             expect(payload).to match_json(
                                   uuid:            String,
                                   date:            String,
                                   description:     String,
@@ -31,7 +31,7 @@ RSpec.describe FlightsChannel do
   it "streams flight updates" do
     expect { @flight.update! description: "new description" }.
         to(have_broadcasted_to(pilot).with do |payload|
-             expect(payload).to match_json_expression(
+             expect(payload).to match_json(
                                   uuid:            String,
                                   date:            String,
                                   description:     "new description",
@@ -43,7 +43,7 @@ RSpec.describe FlightsChannel do
   it "streams flight deletes" do
     expect { @flight.destroy! }.
         to(have_broadcasted_to(pilot).with do |payload|
-             expect(payload).to match_json_expression(
+             expect(payload).to match_json(
                                   uuid:       String,
                                   destroyed?: true
                                 )

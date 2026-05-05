@@ -2,9 +2,9 @@
 
 FactoryBot.define do
   factory :pilot do
-    name { FFaker::Name.name }
+    name { Faker::Name.name }
     sequence(:email) { |i| "email-#{i}@example.com" }
-    password { FFaker::Internet.password }
+    password { Faker::Internet.password }
     status_id { 2 }
 
     trait :unverified do

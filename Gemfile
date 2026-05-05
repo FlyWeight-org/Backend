@@ -28,7 +28,8 @@ gem "webauthn"
 gem "pg"
 
 # VIEWS
-gem "jbuilder"
+gem "alba"
+gem "oj"
 
 # MAIL
 gem "resend"
@@ -62,13 +63,12 @@ end
 
 group :test do
   # SPECS
-  gem "json_expressions", require: "json_expressions/rspec"
   gem "rails-controller-testing"
   gem "rspec-rails"
 
   # FACTORIES
   gem "factory_bot_rails"
-  gem "ffaker"
+  gem "faker"
 
   # ISOLATION
   gem "database_cleaner-active_record"

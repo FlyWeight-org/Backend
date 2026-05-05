@@ -34,7 +34,7 @@ RSpec.describe "/pilot/flights/:flight_id/loads" do
         post collection_path,
              params: {load: load_params}
         expect(response).to be_successful
-        expect(response.body).to match_json_expression(
+        expect(response.body).to match_json(
                                    uuid:        String,
                                    date:        String,
                                    description: String,
@@ -99,7 +99,7 @@ RSpec.describe "/pilot/flights/:flight_id/loads" do
       it "deletes the load" do
         delete record_path
         expect(response).to be_successful
-        expect(response.body).to match_json_expression(
+        expect(response.body).to match_json(
                                    uuid:        String,
                                    date:        String,
                                    description: String,

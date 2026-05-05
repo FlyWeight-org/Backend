@@ -3,7 +3,7 @@
 require "rails_helper"
 
 RSpec.describe "POST /login with Turnstile" do
-  let(:password) { FFaker::Internet.password }
+  let(:password) { Faker::Internet.password }
   let(:pilot) { create :pilot, password: }
 
   context "when Turnstile verification succeeds" do

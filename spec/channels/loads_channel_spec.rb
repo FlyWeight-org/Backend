@@ -39,7 +39,7 @@ RSpec.describe LoadsChannel do
   it "streams load creates" do
     expect { create :load, :cargo, flight: }.
         to(have_broadcasted_to(flight).with do |payload|
-             expect(payload).to match_json_expression(
+             expect(payload).to match_json(
                                   slug:        String,
                                   name:        String,
                                   weight:      0,
@@ -51,7 +51,7 @@ RSpec.describe LoadsChannel do
   it "streams load updates" do
     expect { @load.update! name: "new name" }.
         to(have_broadcasted_to(flight).with do |payload|
-             expect(payload).to match_json_expression(
+             expect(payload).to match_json(
                                   slug:        "new-name",
                                   name:        "new name",
                                   weight:      Integer,
@@ -63,7 +63,7 @@ RSpec.describe LoadsChannel do
   it "streams load deletes" do
     expect { @load.destroy! }.
         to(have_broadcasted_to(flight).with do |payload|
-             expect(payload).to match_json_expression(
+             expect(payload).to match_json(
                                   slug:       String,
                                   destroyed?: true
                                 )

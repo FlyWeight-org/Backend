@@ -7,7 +7,7 @@ FactoryBot.define do
     trait :passenger do
       sequence(:name) { |i| "passenger-#{i}" }
       weight { rand(100..300) }
-      bags_weight { FFaker::Boolean.maybe ? rand(5..50) : 0 }
+      bags_weight { [true, false].sample ? rand(5..50) : 0 }
     end
 
     trait :cargo do

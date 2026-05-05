@@ -3,7 +3,7 @@
 require "rails_helper"
 
 RSpec.describe "sessions" do
-  let(:password) { FFaker::Internet.password }
+  let(:password) { Faker::Internet.password }
   let(:pilot) { create :pilot, password: }
   let(:email) { pilot.email }
 

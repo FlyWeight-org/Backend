@@ -3,7 +3,7 @@
 require "rails_helper"
 
 RSpec.describe "Account" do
-  let(:current_password) { FFaker::Internet.password }
+  let(:current_password) { Faker::Internet.password }
   let(:pilot) { create :pilot, password: current_password }
 
   describe "POST /signup" do

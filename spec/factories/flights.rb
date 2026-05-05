@@ -5,6 +5,6 @@ FactoryBot.define do
     pilot
 
     date { rand(1..30).days.ago }
-    description { FFaker::Lorem.sentence }
+    description { Faker::Lorem.sentence }
   end
 end

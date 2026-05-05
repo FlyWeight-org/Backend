@@ -1,0 +1,6 @@
+# frozen_string_literal: true
+if authorized_flight?
+  FlightSerializer.new(@flight, params: { can_edit: true, include_loads: true }).serialize
+else
+  FlightSerializer.new(@flight).serialize
+end
