@@ -29,7 +29,7 @@ class FlightsController < ApplicationController
   private
 
   def find_flight
-    @flight = Flight.with_passenger_count.includes(:pilot, :loads).find_by!(uuid: params[:id])
+    @flight = Flight.with_passenger_count.includes(:pilot, :loads).find_by!(uuid: params.expect(:id))
   end
 
   def authorized_flight? = pilot_signed_in? && @flight.pilot == current_pilot

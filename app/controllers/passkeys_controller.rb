@@ -14,14 +14,14 @@ class PasskeysController < ApplicationController
 
   # PATCH /account/passkeys/:webauthn_id
   def update
-    key = current_pilot.webauthn_keys.find_by!(webauthn_id: params[:webauthn_id])
+    key = current_pilot.webauthn_keys.find_by!(webauthn_id: params.expect(:webauthn_id))
     key.update!(label: params[:label])
     render json: passkey_json(key)
   end
 
   # DELETE /account/passkeys/:webauthn_id
   def destroy
-    key = current_pilot.webauthn_keys.find_by!(webauthn_id: params[:webauthn_id])
+    key = current_pilot.webauthn_keys.find_by!(webauthn_id: params.expect(:webauthn_id))
     key.destroy!
     head :no_content
   end
