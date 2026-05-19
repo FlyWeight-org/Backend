@@ -39,7 +39,7 @@ class LoadsController < ApplicationController
   private
 
   def find_flight
-    @flight = Flight.find_by!(uuid: params[:flight_id])
+    @flight = Flight.find_by!(uuid: params.expect(:flight_id))
   end
 
   def load_params
