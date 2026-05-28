@@ -1,0 +1,30 @@
+# Bundler
+/.bundle
+
+# Rails runtime
+/log/*
+!/log/.keep
+/tmp/*
+!/tmp/.keep
+/storage/*
+!/storage/.keep
+/tmp/pids/*
+!/tmp/pids/
+!/tmp/pids/.keep
+
+# RSpec
+/spec/examples.txt
+
+# Credentials / secrets
+/config/master.key
+/config/credentials/*.key
+.env*
+
+# Yarn PnP (tooling)
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/sdks
+!.yarn/versions
+.pnp.*
