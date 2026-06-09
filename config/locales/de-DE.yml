@@ -1,0 +1,74 @@
+de-DE:
+  activerecord:
+    models:
+      flight: Flug
+      load: Eintrag
+      pilot: Pilot
+    attributes:
+      flight:
+        pilot_id: Pilot
+        date: Datum
+        description: Beschreibung
+      load:
+        name: Name
+        weight: Gewicht
+        bags_weight: Gepäckgewicht
+        covid19_vaccination: COVID-19-Impfung
+      pilot:
+        name: Name
+        email: E-Mail-Adresse
+        weight_unit: Gewichtseinheit
+        password: Passwort
+        password_confirmation: Passwortbestätigung
+  application_controller:
+    errors:
+      internal_server_error: Ein interner Fehler ist aufgetreten.
+  rodauth_mailer:
+    shared:
+      paste_url: "Oder kopiere diese URL und füge sie in deinen Browser ein:"
+    verify_account:
+      subject: Bestätige dein FlyWeight-Konto
+      heading: Bestätige dein FlyWeight-Konto
+      intro: "Willkommen bei FlyWeight! Klicke auf den Button unten, um dein Konto zu bestätigen:"
+      button: Konto bestätigen
+      ignore: Wenn du dich nicht registriert hast, ignoriere diese E-Mail.
+      text_intro: "Bestätige dein FlyWeight-Konto, indem du diese Adresse besuchst:"
+    reset_password:
+      subject: Setze dein FlyWeight-Passwort zurück
+      heading: Setze dein FlyWeight-Passwort zurück
+      intro: "Wir haben eine Anfrage erhalten, dein Passwort zurückzusetzen. Klicke auf den Button unten, um ein neues zu wählen:"
+      button: Passwort zurücksetzen
+      ignore: Wenn du kein Zurücksetzen des Passworts angefordert hast, ignoriere diese E-Mail.
+      text_intro: "Setze dein FlyWeight-Passwort zurück, indem du diese Adresse besuchst:"
+  errors:
+    messages:
+      accepted: muss akzeptiert werden
+      blank: darf nicht leer sein
+      confirmation: stimmt nicht mit der Bestätigung überein
+      empty: darf nicht leer sein
+      equal_to: muss gleich %{count} sein
+      even: muss gerade sein
+      exclusion: ist reserviert
+      greater_than: muss größer als %{count} sein
+      greater_than_or_equal_to: muss größer als oder gleich %{count} sein
+      inclusion: ist nicht zulässig
+      incorrect_type: hat einen falschen Typ
+      invalid: ist ungültig
+      invalid_email: ist keine gültige E-Mail-Adresse
+      less_than: muss kleiner als %{count} sein
+      less_than_or_equal_to: muss kleiner als oder gleich %{count} sein
+      not_a_number: ist keine Zahl
+      not_an_integer: ist keine ganze Zahl
+      odd: muss ungerade sein
+      taken: ist bereits vergeben
+      too_long: muss %{count} Zeichen oder kürzer sein
+      too_short: muss %{count} Zeichen oder länger sein
+      wrong_length: muss genau %{count} Zeichen lang sein
+      invalid_date: ist kein gültiges Datum
+      invalid_time: ist keine gültige Uhrzeit
+      invalid_datetime: ist kein gültiges Datum mit Uhrzeit
+      is_at: muss bei %{restriction} liegen
+      before: muss vor %{restriction} liegen
+      on_or_before: muss am oder vor %{restriction} liegen
+      after: muss nach %{restriction} liegen
+      on_or_after: muss am oder nach %{restriction} liegen

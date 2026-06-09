@@ -1,0 +1,74 @@
+fr-FR:
+  activerecord:
+    models:
+      flight: vol
+      load: chargement
+      pilot: pilote
+    attributes:
+      flight:
+        pilot_id: pilote
+        date: date
+        description: description
+      load:
+        name: nom
+        weight: poids
+        bags_weight: poids des bagages
+        covid19_vaccination: vaccination COVID-19
+      pilot:
+        name: nom
+        email: adresse e-mail
+        weight_unit: unité de masse
+        password: mot de passe
+        password_confirmation: confirmation du mot de passe
+  application_controller:
+    errors:
+      internal_server_error: Une erreur interne est survenue.
+  rodauth_mailer:
+    shared:
+      paste_url: "Ou copiez-collez cette URL dans votre navigateur :"
+    verify_account:
+      subject: Vérifiez votre compte FlyWeight
+      heading: Vérifiez votre compte FlyWeight
+      intro: "Bienvenue sur FlyWeight ! Cliquez sur le bouton ci-dessous pour vérifier votre compte :"
+      button: Vérifier votre compte
+      ignore: Si vous n’êtes pas à l’origine de cette inscription, ignorez cet e-mail.
+      text_intro: "Vérifiez votre compte FlyWeight en vous rendant sur :"
+    reset_password:
+      subject: Réinitialisez votre mot de passe FlyWeight
+      heading: Réinitialisez votre mot de passe FlyWeight
+      intro: "Nous avons reçu une demande de réinitialisation de votre mot de passe. Cliquez sur le bouton ci-dessous pour en choisir un nouveau :"
+      button: Réinitialiser votre mot de passe
+      ignore: Si vous n’avez pas demandé de réinitialisation de mot de passe, ignorez cet e-mail.
+      text_intro: "Réinitialisez votre mot de passe FlyWeight en vous rendant sur :"
+  errors:
+    messages:
+      accepted: doit être accepté
+      blank: ne peut pas être vide
+      confirmation: ne correspond pas à la confirmation
+      empty: ne peut pas être vide
+      equal_to: doit être égal à %{count}
+      even: doit être pair
+      exclusion: est réservé
+      greater_than: doit être supérieur à %{count}
+      greater_than_or_equal_to: doit être supérieur ou égal à %{count}
+      inclusion: n’est pas accepté
+      incorrect_type: type incorrect
+      invalid: n’est pas valide
+      invalid_email: n’est pas une adresse e-mail valide
+      less_than: doit être inférieur à %{count}
+      less_than_or_equal_to: doit être inférieur ou égal à %{count}
+      not_a_number: n’est pas un nombre
+      not_an_integer: n’est pas un entier
+      odd: doit être impair
+      taken: est déjà utilisé
+      too_long: doit comporter au maximum %{count} caractères
+      too_short: doit comporter au minimum %{count} caractères
+      wrong_length: doit comporter exactement %{count} caractères
+      invalid_date: n’est pas une date valide
+      invalid_time: n’est pas une heure valide
+      invalid_datetime: n’est pas une date et une heure valides
+      is_at: doit être à %{restriction}
+      before: doit être antérieur à %{restriction}
+      on_or_before: doit être au plus tard le %{restriction}
+      after: doit être postérieur à %{restriction}
+      on_or_after: doit être au plus tôt le %{restriction}
