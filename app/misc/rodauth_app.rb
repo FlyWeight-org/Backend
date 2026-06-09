@@ -149,6 +149,8 @@ class RodauthApp < Rodauth::Rails::App
 
     before_create_account do
       account[:name] = param("name")
+      weight_unit = param_or_nil("weight_unit")
+      account[:weight_unit] = weight_unit if Pilot.weight_units.key?(weight_unit)
       account[:created_at] = Time.current
       account[:updated_at] = Time.current
     end
