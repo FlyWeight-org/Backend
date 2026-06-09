@@ -20,22 +20,22 @@ env:
 
 jobs:
   deploy:
-      name: Deploy to Fly.io
-      if: ${{ github.event.workflow_run.conclusion == 'success' }}
-      runs-on: ubuntu-latest
-      steps:
-        - uses: actions/checkout@v6
-          with:
-            fetch-depth: 0
-        - name: Set up flyctl
-          uses: superfly/flyctl-actions/setup-flyctl@1.6
-        - name: Deploy to Fly.io
-          run: flyctl deploy --remote-only
-        - name: Create Sentry release
-          uses: getsentry/action-release@v3
-          env:
-            SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
-            SENTRY_ORG: timcodes
-            SENTRY_PROJECT: flyweight-backend
-          with:
-            environment: production
+    name: Deploy to Fly.io
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+      - name: Set up flyctl
+        uses: superfly/flyctl-actions/setup-flyctl@1.6
+      - name: Deploy to Fly.io
+        run: flyctl deploy --remote-only
+      - name: Create Sentry release
+        uses: getsentry/action-release@v3
+        env:
+          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+          SENTRY_ORG: timcodes
+          SENTRY_PROJECT: flyweight-backend
+        with:
+          environment: production

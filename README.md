@@ -24,12 +24,12 @@ repository, run `bundle install` to install all gem requirements. Run
 `rails db:create db:migrate` to create the development database.
 
 The Rails back-end is paired with a Vue.js front-end whose repository is hosted
-at https://github.com/FlyWeight-org/Frontend. You must clone both repositories.
+at <https://github.com/FlyWeight-org/Frontend>. You must clone both repositories.
 
 To run the server in development mode, you can create a `Procfile` with contents
 such as:
 
-```
+```procfile
 backend: cd Backend && rvm 4.0.5@flyweight exec rails server
 frontend: cd Frontend && yarn dev
 anycable: cd Backend && rvm 4.0.5@flyweight exec anycable

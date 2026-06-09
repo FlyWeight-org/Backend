@@ -1,10 +1,10 @@
 concurrency: 1
 development:
   queues:
-  - flyweight_development
+    - flyweight_development
 cypress:
   queues:
-  - flyweight_cypress
+    - flyweight_cypress
 production:
   queues:
-  - flyweight_production
+    - flyweight_production
