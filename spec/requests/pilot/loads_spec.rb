@@ -41,7 +41,8 @@ RSpec.describe "/pilot/flights/:flight_id/loads" do
                                    can_edit:    true,
                                    pilot:       {
                                        name:        String,
-                                       weight_unit: String
+                                       weight_unit: String,
+                                       locale:      nil
                                    },
                                    loads:       [{
                                        slug:        String,
@@ -107,7 +108,8 @@ RSpec.describe "/pilot/flights/:flight_id/loads" do
                                    can_edit:    true,
                                    pilot:       {
                                        name:        String,
-                                       weight_unit: String
+                                       weight_unit: String,
+                                       locale:      nil
                                    },
                                    loads:       []
                                  )

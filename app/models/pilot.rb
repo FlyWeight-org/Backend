@@ -19,11 +19,17 @@
 # | `name`        | The pilot's name, used to help passengers identify the flight.                                 |
 # | `email`       | The pilot's email, used to uniquely identify the pilot and for forgotten passwords.            |
 # | `weight_unit` | The pilot's preferred weight unit (`lb` or `kg`) for display. {Load} weights are stored in lb. |
+# | `locale`      | The pilot's preferred UI/email language as a BCP-47 tag (e.g. `de-DE`), or `nil` for default. |
 
 class Pilot < ApplicationRecord
   include Rodauth::Rails.model
 
+  # The locales the app is translated into. Mirrors the frontend's `SUPPORTED_LOCALES`.
+  SUPPORTED_LOCALES = %w[en en-GB en-CA en-AU de-DE fr-FR].freeze
+
   enum :weight_unit, {lb: "lb", kg: "kg"}, default: "lb", validate: true
+
+  validates :locale, inclusion: {in: SUPPORTED_LOCALES}, allow_nil: true
 
   has_many :flights, dependent: :delete_all
   has_many :webauthn_keys, class_name:  "AccountWebauthnKey",
