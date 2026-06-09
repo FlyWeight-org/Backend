@@ -6,21 +6,24 @@
 # Associations
 # ------------
 #
-# |                  |                                      |
-# |:-----------------|:-------------------------------------|
-# | `flights`        | The {Flight}s created by this pilot. |
-# | `webauthn_keys`  | Registered passkey credentials.      |
+# |                 |                                      |
+# |:----------------|:-------------------------------------|
+# | `flights`       | The {Flight}s created by this pilot. |
+# | `webauthn_keys` | Registered passkey credentials.      |
 #
 # Properties
 # ----------
 #
-# |         |                                                                                     |
-# |:--------|:------------------------------------------------------------------------------------|
-# | `name`  | The pilot's name, used to help passengers identify the flight.                      |
-# | `email` | The pilot's email, used to uniquely identify the pilot and for forgotten passwords. |
+# |               |                                                                                                |
+# |:--------------|:-----------------------------------------------------------------------------------------------|
+# | `name`        | The pilot's name, used to help passengers identify the flight.                                 |
+# | `email`       | The pilot's email, used to uniquely identify the pilot and for forgotten passwords.            |
+# | `weight_unit` | The pilot's preferred weight unit (`lb` or `kg`) for display. {Load} weights are stored in lb. |
 
 class Pilot < ApplicationRecord
   include Rodauth::Rails.model
+
+  enum :weight_unit, {lb: "lb", kg: "kg"}, default: "lb", validate: true
 
   has_many :flights, dependent: :delete_all
   has_many :webauthn_keys, class_name:  "AccountWebauthnKey",

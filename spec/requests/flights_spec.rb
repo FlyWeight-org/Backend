@@ -33,7 +33,8 @@ RSpec.describe "/flights" do
                                    description: String,
                                    can_edit:    false,
                                    pilot:       {
-                                       name: String
+                                       name:        String,
+                                       weight_unit: String
                                    }
                                  )
       end
@@ -52,7 +53,8 @@ RSpec.describe "/flights" do
                                    description: String,
                                    can_edit:    false,
                                    pilot:       {
-                                       name: String
+                                       name:        String,
+                                       weight_unit: String
                                    }
                                  )
       end
@@ -71,15 +73,30 @@ RSpec.describe "/flights" do
                                    description: String,
                                    can_edit:    true,
                                    pilot:       {
-                                       name: String
+                                       name:        String,
+                                       weight_unit: String
                                    },
                                    loads:       [{
                                        slug:        String,
                                        name:        String,
-                                       weight:      Integer,
-                                       bags_weight: Integer
+                                       weight:      Numeric,
+                                       bags_weight: Numeric
                                    }] * 3
                                  )
+      end
+
+      it "serializes decimal load weights as JSON numbers" do
+        load = flight.loads.first
+        load.update! weight: 154.32, bags_weight: 12.5
+
+        get record_path
+
+        expect(response).to be_successful
+        body = response.parsed_body
+        serialized = body["loads"].find { |l| l["slug"] == load.slug }
+        expect(serialized["weight"]).to eq(154.32)
+        expect(serialized["weight"]).to be_a(Numeric)
+        expect(serialized["bags_weight"]).to eq(12.5)
       end
     end
   end

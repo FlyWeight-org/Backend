@@ -28,14 +28,15 @@ class AccountsController < ApplicationController
   private
 
   def account_params
-    params.expect(pilot: %i[name email])
+    params.expect(pilot: %i[name email weight_unit])
   end
 
   def account_json(pilot)
     {
-        name:     pilot.name,
-        email:    pilot.email,
-        passkeys: pilot.webauthn_keys.order(:last_use).map do |k|
+        name:        pilot.name,
+        email:       pilot.email,
+        weight_unit: pilot.weight_unit,
+        passkeys:    pilot.webauthn_keys.order(:last_use).map do |k|
           {id: k.webauthn_id, label: k.label, last_used_at: k.last_use}
         end
     }

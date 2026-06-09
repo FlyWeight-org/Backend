@@ -10,9 +10,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_04_28_231723) do
+ActiveRecord::Schema[8.1].define(version: 2026_06_08_000002) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
+
+  # Custom types defined in this database.
+  # Note that some types may not work with other database engines. Be careful if changing database.
+  create_enum "weight_unit", ["lb", "kg"]
 
   create_table "account_jwt_refresh_keys", force: :cascade do |t|
     t.datetime "deadline", null: false
@@ -59,14 +63,14 @@ ActiveRecord::Schema[8.1].define(version: 2026_04_28_231723) do
   end
 
   create_table "loads", force: :cascade do |t|
-    t.integer "bags_weight", default: 0, null: false
+    t.decimal "bags_weight", precision: 8, scale: 2, default: "0.0", null: false
     t.boolean "covid19_vaccination", default: false, null: false
     t.datetime "created_at", null: false
     t.bigint "flight_id", null: false
     t.string "name", null: false
     t.string "slug", null: false
     t.datetime "updated_at", null: false
-    t.integer "weight", default: 0, null: false
+    t.decimal "weight", precision: 8, scale: 2, default: "0.0", null: false
     t.index ["flight_id", "slug"], name: "index_loads_on_flight_id_and_slug", unique: true
     t.index ["flight_id"], name: "index_loads_on_flight_id"
   end
@@ -79,6 +83,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_04_28_231723) do
     t.string "password_hash"
     t.integer "status_id", default: 1, null: false
     t.datetime "updated_at", null: false
+    t.enum "weight_unit", default: "lb", null: false, enum_type: "weight_unit"
     t.index ["email"], name: "index_pilots_on_email", unique: true
   end
 

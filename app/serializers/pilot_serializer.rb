@@ -1,5 +1,5 @@
 # frozen_string_literal: true
 
 class PilotSerializer < ApplicationSerializer
-  attributes :name
+  attributes :name, :weight_unit
 end

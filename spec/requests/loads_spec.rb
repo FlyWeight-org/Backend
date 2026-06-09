@@ -26,8 +26,8 @@ RSpec.describe "/flights/:flight_id/loads" do
       expect(response.body).to match_json(
                                  slug:        String,
                                  name:        String,
-                                 weight:      Integer,
-                                 bags_weight: Integer
+                                 weight:      Numeric,
+                                 bags_weight: Numeric
                                )
 
       expect(flight.loads.count).to eq(1)

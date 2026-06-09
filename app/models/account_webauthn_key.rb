@@ -13,10 +13,10 @@
 # Properties
 # ----------
 #
-# |               |                                              |
-# |:--------------|:---------------------------------------------|
-# | `webauthn_id` | The credential ID (used as external key).    |
-# | `label`       | User-friendly name (e.g. "My iPhone").       |
+# |               |                                               |
+# |:--------------|:----------------------------------------------|
+# | `webauthn_id` | The credential ID (used as external key).     |
+# | `label`       | User-friendly name (e.g. "My iPhone").        |
 # | `last_use`    | When this credential was last used to log in. |
 
 class AccountWebauthnKey < ApplicationRecord

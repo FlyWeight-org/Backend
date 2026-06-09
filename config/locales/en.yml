@@ -17,6 +17,7 @@ en:
       pilot:
         name: name
         email: email address
+        weight_unit: weight unit
         password: password
         password_confirmation: password confirmation
   application_controller:

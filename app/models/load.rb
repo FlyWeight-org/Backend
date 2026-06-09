@@ -41,11 +41,11 @@ class Load < ApplicationRecord
 
   validates :weight,
             presence:     true,
-            numericality: {only_integer: true, greater_than_or_equal_to: 0}
+            numericality: {greater_than_or_equal_to: 0}
 
   validates :bags_weight,
             presence:     true,
-            numericality: {only_integer: true, greater_than_or_equal_to: 0}
+            numericality: {greater_than_or_equal_to: 0}
 
   validate :total_weight_greater_than_zero
 

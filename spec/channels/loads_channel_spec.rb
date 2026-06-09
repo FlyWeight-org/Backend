@@ -42,8 +42,8 @@ RSpec.describe LoadsChannel do
              expect(payload).to match_json(
                                   slug:        String,
                                   name:        String,
-                                  weight:      0,
-                                  bags_weight: Integer
+                                  weight:      0.0,
+                                  bags_weight: Numeric
                                 )
            end)
   end
@@ -54,8 +54,8 @@ RSpec.describe LoadsChannel do
              expect(payload).to match_json(
                                   slug:        "new-name",
                                   name:        "new name",
-                                  weight:      Integer,
-                                  bags_weight: Integer
+                                  weight:      Numeric,
+                                  bags_weight: Numeric
                                 )
            end)
   end

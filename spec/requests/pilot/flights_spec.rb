@@ -65,7 +65,8 @@ RSpec.describe "/pilot/flights" do
                                    description: String,
                                    can_edit:    true,
                                    pilot:       {
-                                       name: String
+                                       name:        String,
+                                       weight_unit: String
                                    },
                                    loads:       []
                                  )
@@ -116,13 +117,14 @@ RSpec.describe "/pilot/flights" do
                                    description: String,
                                    can_edit:    true,
                                    pilot:       {
-                                       name: String
+                                       name:        String,
+                                       weight_unit: String
                                    },
                                    loads:       [{
                                        slug:        String,
                                        name:        String,
-                                       weight:      Integer,
-                                       bags_weight: Integer
+                                       weight:      Numeric,
+                                       bags_weight: Numeric
                                    }] * 3
                                  )
 

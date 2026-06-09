@@ -46,6 +46,7 @@ RSpec.describe "Account" do
         body = response.parsed_body
         expect(body["name"]).to eq(pilot.name)
         expect(body["email"]).to eq(pilot.email)
+        expect(body["weight_unit"]).to eq("lb")
         expect(body["passkeys"]).to eq([])
       end
     end
