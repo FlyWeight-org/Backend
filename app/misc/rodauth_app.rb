@@ -51,6 +51,15 @@ class RodauthApp < Rodauth::Rails::App
     jwt_access_token_period 900 # 15 minutes
     jwt_refresh_token_deadline_interval days: 30
 
+    # The refresh route must accept the (already-expired) access token alongside
+    # the refresh token; that is the whole point of refreshing. Without this,
+    # refreshing is only possible while the access token is still valid.
+    allow_refresh_with_expired_jwt_access_token? true
+
+    # Signal an expired access token as 401 rather than Rodauth's default 400,
+    # so the client treats it as an auth challenge and refreshes transparently.
+    expired_jwt_access_token_status 401
+
     # Include email in JWT payload for Action Cable.
     jwt_session_hash do
       h = super()
