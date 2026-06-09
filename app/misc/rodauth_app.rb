@@ -102,16 +102,15 @@ class RodauthApp < Rodauth::Rails::App
       token_key = convert_email_token_key(reset_password_key_value)
       token = "#{account_id}#{token_separator}#{token_key}"
       link = "#{frontend}/reset-password?key=#{token}"
-      RodauthMailer.reset_password(account[:email], link).deliver_now
+      RodauthMailer.reset_password(account[:email], link, account[:locale]).deliver_now
     end
 
-    verify_account_email_subject "Verify your FlyWeight account"
     send_verify_account_email do
       frontend = Rails.application.config.urls.frontend
       token_key = convert_email_token_key(verify_account_key_value)
       token = "#{account_id}#{token_separator}#{token_key}"
       link = "#{frontend}/verify-account?key=#{token}"
-      RodauthMailer.verify_account(account[:email], link).deliver_now
+      RodauthMailer.verify_account(account[:email], link, account[:locale]).deliver_now
     end
 
     # ── WebAuthn ──────────────────────────────────────────────────────────
@@ -160,6 +159,8 @@ class RodauthApp < Rodauth::Rails::App
       account[:name] = param("name")
       weight_unit = param_or_nil("weight_unit")
       account[:weight_unit] = weight_unit if Pilot.weight_units.key?(weight_unit)
+      locale = param_or_nil("locale")
+      account[:locale] = locale if Pilot::SUPPORTED_LOCALES.include?(locale)
       account[:created_at] = Time.current
       account[:updated_at] = Time.current
     end

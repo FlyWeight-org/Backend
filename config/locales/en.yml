@@ -24,10 +24,22 @@ en:
     errors:
       internal_server_error: An internal error has occurred.
   rodauth_mailer:
+    shared:
+      paste_url: "Or copy and paste this URL into your browser:"
     verify_account:
       subject: Verify your FlyWeight account
+      heading: Verify your FlyWeight account
+      intro: "Welcome to FlyWeight! Click the button below to verify your account:"
+      button: Verify your account
+      ignore: If you didn’t sign up, ignore this email.
+      text_intro: "Verify your FlyWeight account by visiting:"
     reset_password:
       subject: Reset your FlyWeight password
+      heading: Reset your FlyWeight password
+      intro: "We received a request to reset your password. Click the button below to choose a new one:"
+      button: Reset your password
+      ignore: If you didn’t request a password reset, ignore this email.
+      text_intro: "Reset your FlyWeight password by visiting:"
   errors:
     messages:
       accepted: must be accepted
