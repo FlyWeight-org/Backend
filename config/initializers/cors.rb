@@ -11,7 +11,7 @@ Rails.application.config.middleware.insert_before 0, Rack::Cors do
   allow do
     origins Rails.application.config.urls.frontend
     resource "*",
-             headers:     %w[Authorization],
+             headers:     %w[Authorization X-Locale],
              methods:     :any,
              expose:      %w[Authorization],
              max_age:     600,

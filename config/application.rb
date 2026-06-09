@@ -42,6 +42,14 @@ module Flyweight
     config.active_record.default_timezone = :utc
     # config.eager_load_paths << Rails.root.join("extras")
 
+    # ── Internationalization ──────────────────────────────────────────────
+    # `en` is the source locale and the fallback for every other locale. The
+    # en-* variants carry no translations of their own (their wording matches
+    # `en`); they exist so locale-aware formatting resolves correctly.
+    config.i18n.default_locale    = :en
+    config.i18n.available_locales = %i[en en-GB en-CA en-AU de-DE fr-FR]
+    config.i18n.fallbacks         = true
+
     # Only loads a smaller set of middleware suitable for API only apps.
     # Middleware like session, flash, cookies can be added back manually.
     # Skip views, helpers and assets when generating a new resource.
