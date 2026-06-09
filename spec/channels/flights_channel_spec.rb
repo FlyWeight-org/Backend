@@ -40,6 +40,18 @@ RSpec.describe FlightsChannel do
            end)
   end
 
+  it "streams passenger adds" do
+    expect { create :load, :passenger, flight: @flight }.
+        to(have_broadcasted_to(pilot).with do |payload|
+             expect(payload).to match_json(
+                                  uuid:            @flight.uuid,
+                                  date:            String,
+                                  description:     String,
+                                  passenger_count: 1
+                                )
+           end)
+  end
+
   it "streams flight deletes" do
     expect { @flight.destroy! }.
         to(have_broadcasted_to(pilot).with do |payload|

@@ -25,7 +25,7 @@
 # | `covid19_vaccination` | `true` if the passenger is up-to-date on COVID-19 vaccinations (legacy) (n/a for cargo). |
 
 class Load < ApplicationRecord
-  belongs_to :flight
+  belongs_to :flight, touch: true
 
   scope :passengers, -> { where arel_table[:weight].gt(0) }
   scope :cargo, -> { where weight: 0 }
