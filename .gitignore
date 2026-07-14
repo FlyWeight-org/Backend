@@ -28,3 +28,4 @@
 !.yarn/sdks
 !.yarn/versions
 .pnp.*
+.claude/settings.local.json

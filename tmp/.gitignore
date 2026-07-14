@@ -1,1 +1,1 @@
-local_secret.txt
+# Keeps tmp/ in the repo. Its contents are ignored by the root .gitignore.
