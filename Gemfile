@@ -46,6 +46,9 @@ gem "yabeda-puma-plugin", group: %i[development production]
 gem "yabeda-rails", group: %i[development production]
 
 group :development do
+  # MAIL
+  gem "letter_opener"
+
   # LINT
   gem "brakeman", require: false
 
