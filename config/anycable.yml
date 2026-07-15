@@ -36,3 +36,4 @@ test:
 production:
   <<: *default
   websocket_url: ~
+  # redis_url comes from the ANYCABLE_REDIS_URL secret (Upstash supports db 0 only).

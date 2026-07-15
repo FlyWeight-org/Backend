@@ -75,8 +75,12 @@ module Flyweight
         protocol: backend.scheme
     }
 
+    # /_anycable is anycable-go's HTTP RPC endpoint, reached internally over
+    # flyweight-backend.flycast — a Host that isn't (and shouldn't be) in
+    # config.hosts. It has its own Bearer-secret auth, so exclude it from host
+    # authorization the same way the health and metrics endpoints are.
     config.host_authorization = {
-        exclude: ->(request) { request.path.start_with?("/up") || request.path == "/metrics" }
+        exclude: ->(request) { request.path.start_with?("/up") || request.path == "/metrics" || request.path.start_with?("/_anycable") }
     }
   end
 end

@@ -17,9 +17,13 @@ console_command = '/rails/bin/rails console'
 
 [http_service]
   internal_port = 3000
+  # Keep one machine always-on: anycable-go reaches this app over HTTP RPC
+  # (flyweight-backend.flycast/_anycable) to authenticate every WebSocket
+  # connect/subscribe. A suspended backend can't answer that RPC in time, so
+  # sockets would fail to connect.
   auto_stop_machines = 'suspend'
   auto_start_machines = true
-  min_machines_running = 0
+  min_machines_running = 1
   processes = ['app']
 
 [checks]
