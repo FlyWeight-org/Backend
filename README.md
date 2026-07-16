@@ -2,7 +2,7 @@
 
 [![CI](https://github.com/FlyWeight-org/Backend/actions/workflows/ci.yml/badge.svg)](https://github.com/FlyWeight-org/Backend/actions/workflows/ci.yml)
 [![Deploy](https://github.com/FlyWeight-org/Backend/actions/workflows/deploy.yml/badge.svg)](https://github.com/FlyWeight-org/Backend/actions/workflows/deploy.yml)
-[![Ruby](https://img.shields.io/badge/Ruby-4.0.5-red.svg)](https://www.ruby-lang.org)
+[![Ruby](https://img.shields.io/badge/Ruby-4.0.6-red.svg)](https://www.ruby-lang.org)
 [![Rails](https://img.shields.io/badge/Rails-8.1.3-red.svg)](https://rubyonrails.org)
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 
@@ -18,7 +18,7 @@ giving passengers a basic assurance of privacy.
 
 ### Installation and Running
 
-FlyWeight requires Ruby 4.0.5, PostgreSQL, and Redis. (If you use Homebrew,
+FlyWeight requires Ruby 4.0.6, PostgreSQL, and Redis. (If you use Homebrew,
 you can install those dependencies with `brew install`.) After cloning the
 repository, run `bundle install` to install all gem requirements. Run
 `rails db:create db:migrate` to create the development database.
@@ -30,10 +30,10 @@ To run the server in development mode, you can create a `Procfile` with contents
 such as:
 
 ```procfile
-backend: cd Backend && rvm 4.0.5@flyweight exec rails server
+backend: cd Backend && rvm 4.0.6@flyweight exec rails server
 frontend: cd Frontend && yarn dev
-anycable: cd Backend && rvm 4.0.5@flyweight exec anycable
-ws: cd Backend && rvm 4.0.5@flyweight exec bin/anycable-go --port=8080
+anycable: cd Backend && rvm 4.0.6@flyweight exec anycable
+ws: cd Backend && rvm 4.0.6@flyweight exec bin/anycable-go --port=8080
 ```
 
 Scheduled tasks (daily flight purge) are driven by QStash in production.
