@@ -26,15 +26,23 @@ repository, run `bundle install` to install all gem requirements. Run
 The Rails back-end is paired with a Vue.js front-end whose repository is hosted
 at <https://github.com/FlyWeight-org/Frontend>. You must clone both repositories.
 
-To run the server in development mode, you can create a `Procfile` with contents
-such as:
+To run the server in development mode, you can create a `Procfile` in the parent
+directory with contents such as:
 
 ```procfile
-backend: cd Backend && rvm 4.0.6@flyweight exec rails server
-frontend: cd Frontend && yarn dev
-anycable: cd Backend && rvm 4.0.6@flyweight exec anycable
-ws: cd Backend && rvm 4.0.6@flyweight exec bin/anycable-go --port=8080
+backend: cd Backend && PORT=5000 ANYCABLE_HTTP_RPC=true rvm 4.0.6@flyweight do rails server
+frontend: cd Frontend && pnpm dev
+ws: cd Backend && rvm 4.0.6@flyweight do bin/anycable-go --port=8080 --rpc_host=http://localhost:5000/_anycable
 ```
+
+`PORT=5000` matches `config/urls.yml` and the front-end's `.env` files; Puma
+would otherwise default to 3000. `ANYCABLE_HTTP_RPC` mounts AnyCable's RPC
+endpoint at `/_anycable` inside the Rails server, the way production runs it, so
+no separate RPC process is needed. Pass `--port` to `anycable-go` explicitly:
+it also reads `$PORT`, which overmind sets per-process.
+
+Postgres and Redis are expected to be running already, e.g. as brew services
+(`brew services start postgresql@17 redis`).
 
 Scheduled tasks (daily flight purge) are driven by QStash in production.
 See `bin/qstash_setup` for schedule registration.
