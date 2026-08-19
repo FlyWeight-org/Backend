@@ -9,10 +9,13 @@
 # reconnects if the socket is dead — absorbing the Neon cold-start cost
 # here instead of letting it bubble up as a 504 at the Fly proxy.
 #
-# Skips Fly's health-check path so we don't add DB work to /up polls.
+# Skips Fly's health-check and metrics paths. Both are polled continuously
+# (/up every 10s, /metrics every 15s), so there is never a cold start to
+# absorb on them — verifying would only keep the Neon compute from ever
+# reaching its idle-suspend threshold, burning compute hours around the clock.
 
 class VerifyDatabaseConnection
-  SKIP_PATHS = ["/up"].freeze
+  SKIP_PATHS = ["/up", "/metrics"].freeze
 
   def initialize(app)
     @app = app
