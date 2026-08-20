@@ -63,7 +63,7 @@ class RodauthApp < Rodauth::Rails::App
     # Include email in JWT payload for Action Cable.
     jwt_session_hash do
       h = super()
-      h["e"] = account[:email] if account
+      h[:e] = account[:email] if account
       h
     end
 
@@ -169,6 +169,15 @@ class RodauthApp < Rodauth::Rails::App
     create_account_autologin? false
     # Password is captured at signup, not at verification time.
     verify_account_set_password? false
+
+    # Rodauth rotates the verification key on every clear_tokens event so that
+    # an account still awaiting verification keeps a usable key after a
+    # password change. Once verification succeeds no key can ever match again,
+    # so drop the row rather than leave a dead one behind.
+    clear_tokens do |reason|
+      super(reason)
+      remove_verify_account_key if reason == :verify_account
+    end
 
     # ── Account closure ───────────────────────────────────────────────────
 

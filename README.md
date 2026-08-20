@@ -2,7 +2,7 @@
 
 [![CI](https://github.com/FlyWeight-org/Backend/actions/workflows/ci.yml/badge.svg)](https://github.com/FlyWeight-org/Backend/actions/workflows/ci.yml)
 [![Deploy](https://github.com/FlyWeight-org/Backend/actions/workflows/deploy.yml/badge.svg)](https://github.com/FlyWeight-org/Backend/actions/workflows/deploy.yml)
-[![Ruby](https://img.shields.io/badge/Ruby-4.0.6-red.svg)](https://www.ruby-lang.org)
+[![Ruby](https://img.shields.io/badge/Ruby-4.0.7-red.svg)](https://www.ruby-lang.org)
 [![Rails](https://img.shields.io/badge/Rails-8.1.3-red.svg)](https://rubyonrails.org)
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 
@@ -18,7 +18,7 @@ giving passengers a basic assurance of privacy.
 
 ### Installation and Running
 
-FlyWeight requires Ruby 4.0.6, PostgreSQL, and Redis. (If you use Homebrew,
+FlyWeight requires Ruby 4.0.7, PostgreSQL, and Redis. (If you use Homebrew,
 you can install those dependencies with `brew install`.) After cloning the
 repository, run `bundle install` to install all gem requirements. Run
 `rails db:create db:migrate` to create the development database.
@@ -30,9 +30,9 @@ To run the server in development mode, you can create a `Procfile` in the parent
 directory with contents such as:
 
 ```procfile
-backend: cd Backend && PORT=5000 ANYCABLE_HTTP_RPC=true rvm 4.0.6@flyweight do rails server
+backend: cd Backend && PORT=5000 ANYCABLE_HTTP_RPC=true rvm 4.0.7@flyweight do rails server
 frontend: cd Frontend && pnpm dev
-ws: cd Backend && rvm 4.0.6@flyweight do bin/anycable-go --port=8080 --rpc_host=http://localhost:5000/_anycable
+ws: cd Backend && rvm 4.0.7@flyweight do bin/anycable-go --port=8080 --rpc_host=http://localhost:5000/_anycable
 ```
 
 `PORT=5000` matches `config/urls.yml` and the front-end's `.env` files; Puma

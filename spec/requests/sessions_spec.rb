@@ -41,6 +41,25 @@ RSpec.describe "sessions" do
     end
   end
 
+  describe "POST /jwt-refresh" do
+    it "exchanges a refresh token for a new access token" do
+      post "/login", params: {login: email, password:}, as: :json
+      body = response.parsed_body
+      access_token = body["access_token"]
+      refresh_token = body["refresh_token"]
+
+      post "/jwt-refresh",
+           params:  {refresh_token:},
+           headers: {"Authorization" => "Bearer #{access_token}"},
+           as:      :json
+      expect(response).to have_http_status(:success)
+      body = response.parsed_body
+      expect(body["access_token"]).to be_present
+      expect(body["refresh_token"]).to be_present
+      expect(body["access_token"]).not_to eq(access_token)
+    end
+  end
+
   describe "POST /logout" do
     it "returns success when authenticated" do
       post "/logout",
