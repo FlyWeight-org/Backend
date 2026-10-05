@@ -187,7 +187,7 @@ GEM
       google-protobuf (>= 3.25, < 5.0)
       googleapis-common-protos-types (~> 1.0)
     hashdiff (1.2.1)
-    httparty (0.24.2)
+    httparty (0.24.3)
       csv
       mini_mime (>= 1.0.0)
       multi_xml (>= 0.5.2)
@@ -344,7 +344,7 @@ GEM
       connection_pool
     reline (0.7.0)
       io-console (~> 0.5)
-    resend (1.16.0)
+    resend (1.17.0)
       base64
       httparty (>= 0.22.0)
     responders (3.2.1)
@@ -565,7 +565,7 @@ CHECKSUMS
   grpc (1.84.0-x86_64-linux-gnu) sha256=3e9be3e4c4734a2a4977aa34446c604b1542a21fe67e4b7772be01602eac6bb3
   grpc (1.84.0-x86_64-linux-musl) sha256=1ded8b5df0fafb16b195bf559470bf38b9a22bf74a820b892ebb931ca9f2d8ee
   hashdiff (1.2.1) sha256=9c079dbc513dfc8833ab59c0c2d8f230fa28499cc5efb4b8dd276cf931457cd1
-  httparty (0.24.2) sha256=8fca6a54aa0c4aa4303a0fd33e5e2156175d6a5334f714263b458abd7fda9c38
+  httparty (0.24.3) sha256=5c95cf29ca70d5bfd834e56140ddfca6e94166c3b870cde9c25d157cdb5a00d2
   i18n (1.15.2) sha256=00f9eb62412fe593b2a65a97daa75300d37abb8f7202ec748e94b6d46a9dd1b5
   io-console (0.9.4) sha256=a403304f32928ee85e56d457b4612ca43f2703b561a3258844992bd24085fbb1
   irb (1.18.0) sha256=de9454a0703a54704b9811a5ef31a60c86949fbf4013fcf244fabc7c775248e3
@@ -631,7 +631,7 @@ CHECKSUMS
   redis (5.4.1) sha256=b5e675b57ad22b15c9bcc765d5ac26f60b675408af916d31527af9bd5a81faae
   redis-client (0.30.1) sha256=5151bc5c7bbfe48623732cdae3b900d8a22dc691cc7cdfacfb351ac55116522d
   reline (0.7.0) sha256=5b012d8e55dbf9d450f12bde2cf7d15ff546ae80b3f8f3b30e570d431815583d
-  resend (1.16.0) sha256=c90e73a74ab535efdb61139206916948bc7e4942afbf5fed25131cfca83d57c6
+  resend (1.17.0) sha256=027806958c1ff29ae6b37d66e16e20441bf06607d1718aefbb412e634d5b74c9
   responders (3.2.1) sha256=c2772970cbda654c0e772d852e5a851e82cd8e96f5fa958650861ba75b8ffa84
   rexml (3.4.4) sha256=19e0a2c3425dfbf2d4fc1189747bdb2f849b6c5e74180401b15734bc97b5d142
   roda (3.108.0) sha256=a209acc5c885c7c9cfe703ad985b343026f79f67949932dd739b83e5a129ffbd
