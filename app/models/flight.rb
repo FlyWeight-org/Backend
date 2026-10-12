@@ -62,7 +62,7 @@ class Flight < ApplicationRecord
             presence: true
 
   before_validation :set_uuid
-  after_commit { FlightsChannel.broadcast_to pilot, FlightsChannel::Coder.encode(self) }
+  after_commit { FlightsChannel.broadcast_safely_to pilot, FlightsChannel::Coder.encode(self) }
 
   # @private
   def to_param = uuid

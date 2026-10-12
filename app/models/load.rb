@@ -50,7 +50,7 @@ class Load < ApplicationRecord
   validate :total_weight_greater_than_zero
 
   before_validation :set_slug
-  after_commit { LoadsChannel.broadcast_to flight, LoadsChannel::Coder.encode(self) }
+  after_commit { LoadsChannel.broadcast_safely_to flight, LoadsChannel::Coder.encode(self) }
 
   # @private
   def to_param = slug

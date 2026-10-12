@@ -61,4 +61,13 @@ RSpec.describe FlightsChannel do
                                 )
            end)
   end
+
+  it "reports broadcast failures without failing the write" do
+    error = Redis::CannotConnectError.new("Waited 1.0 seconds")
+    allow(ActionCable.server).to receive(:broadcast).and_raise(error)
+    expect(Sentry).to receive(:capture_exception).with(error)
+
+    expect { @flight.destroy! }.not_to raise_error
+    expect(@flight).to be_destroyed
+  end
 end
