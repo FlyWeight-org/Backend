@@ -9,6 +9,9 @@ console_command = '/rails/bin/rails console'
 
 [build]
 
+[env]
+  MCP_ENABLED = '1'
+
 [deploy]
   release_command = './bin/rails db:prepare'
 

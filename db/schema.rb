@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_06_09_000001) do
+ActiveRecord::Schema[8.1].define(version: 2026_10_20_000002) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -75,6 +75,48 @@ ActiveRecord::Schema[8.1].define(version: 2026_06_09_000001) do
     t.index ["flight_id"], name: "index_loads_on_flight_id"
   end
 
+  create_table "oauth_applications", force: :cascade do |t|
+    t.string "client_id", null: false
+    t.string "client_secret"
+    t.string "name", null: false
+    t.text "redirect_uri", null: false
+    t.string "scopes", null: false
+    t.string "token_endpoint_auth_method", null: false
+    t.string "grant_types", null: false
+    t.string "response_types", null: false
+    t.string "registration_access_token"
+    t.index ["client_id"], name: "index_oauth_applications_on_client_id", unique: true
+  end
+
+  create_table "oauth_grants", force: :cascade do |t|
+    t.bigint "account_id", null: false
+    t.bigint "oauth_application_id", null: false
+    t.string "type", null: false
+    t.text "redirect_uri", null: false
+    t.string "code"
+    t.string "scopes", null: false
+    t.datetime "expires_in", null: false
+    t.datetime "revoked_at"
+    t.string "token"
+    t.string "refresh_token"
+    t.string "code_challenge"
+    t.string "code_challenge_method"
+    t.string "resource", null: false
+    t.datetime "created_at", default: -> { "CURRENT_TIMESTAMP" }, null: false
+    t.index ["account_id"], name: "index_oauth_grants_on_account_id"
+    t.index ["code"], name: "index_oauth_grants_on_code", unique: true
+    t.index ["oauth_application_id"], name: "index_oauth_grants_on_oauth_application_id"
+    t.index ["refresh_token"], name: "index_oauth_grants_on_refresh_token", unique: true
+    t.index ["token"], name: "index_oauth_grants_on_token", unique: true
+  end
+
+  create_table "oauth_refresh_token_uses", force: :cascade do |t|
+    t.bigint "oauth_grant_id", null: false
+    t.string "token_hash", null: false
+    t.index ["oauth_grant_id"], name: "index_oauth_refresh_token_uses_on_oauth_grant_id"
+    t.index ["token_hash"], name: "index_oauth_refresh_token_uses_on_token_hash", unique: true
+  end
+
   create_table "pilots", force: :cascade do |t|
     t.boolean "admin", default: false, null: false
     t.datetime "created_at", null: false
@@ -95,4 +137,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_06_09_000001) do
   add_foreign_key "account_webauthn_user_ids", "pilots", column: "id", on_delete: :cascade
   add_foreign_key "flights", "pilots", on_delete: :cascade
   add_foreign_key "loads", "flights", on_delete: :cascade
+  add_foreign_key "oauth_grants", "oauth_applications", on_delete: :cascade
+  add_foreign_key "oauth_grants", "pilots", column: "account_id", on_delete: :cascade
+  add_foreign_key "oauth_refresh_token_uses", "oauth_grants", on_delete: :cascade
 end

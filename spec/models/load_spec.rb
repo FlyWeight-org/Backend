@@ -22,6 +22,14 @@ RSpec.describe Load do
       load.update! name: "Test User"
       expect(load.slug).to eq("test-user")
     end
+
+    it "keeps names without an ASCII transliteration distinct" do
+      flight = create(:flight)
+      slugs = ["山田", "田中", "😀", "مريم"].map { |name| create(:load, :passenger, flight:, name:).slug }
+      expect(slugs).to all(be_present)
+      expect(slugs.uniq.size).to eq(4)
+      expect(flight.loads.with_name("😀")).to be_persisted
+    end
   end
 
   describe "#passenger?" do

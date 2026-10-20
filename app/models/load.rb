@@ -52,6 +52,16 @@ class Load < ApplicationRecord
   before_validation :set_slug
   after_commit { LoadsChannel.broadcast_safely_to flight, LoadsChannel::Coder.encode(self) }
 
+  # Derives the slug that identifies a Load named `name` within its Flight.
+  # Names with no ASCII transliteration (such as CJK or emoji) get a digest of
+  # their normalized form, so distinct names keep distinct slugs.
+  #
+  # @param [String] name A passenger name or cargo description.
+  # @return [String] The slug for that name.
+  def self.slug_for(name)
+    name.parameterize.presence || Digest::SHA256.hexdigest(name.unicode_normalize(:nfkc).downcase.squish).first(16)
+  end
+
   # @private
   def to_param = slug
 
@@ -66,7 +76,7 @@ class Load < ApplicationRecord
   private
 
   def set_slug
-    self.slug = name.parameterize if name.present?
+    self.slug = self.class.slug_for(name) if name.present?
   end
 
   def total_weight_greater_than_zero

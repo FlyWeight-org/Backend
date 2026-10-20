@@ -33,7 +33,7 @@ class Flight < ApplicationRecord
 
     def with_name(name)
       if name.present?
-        where(slug: name.parameterize).first_or_initialize
+        where(slug: Load.slug_for(name)).first_or_initialize
       else
         build
       end
