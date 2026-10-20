@@ -61,6 +61,8 @@ module Flyweight
       g.fixture_replacement :factory_bot, dir: "spec/factories"
     end
 
+    config.x.mcp_enabled = ENV["MCP_ENABLED"] == "1"
+
     config.urls = config_for(:urls)
 
     config.action_cable.url                     = config.urls.cable

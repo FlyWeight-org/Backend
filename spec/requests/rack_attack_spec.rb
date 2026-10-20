@@ -20,4 +20,10 @@ RSpec.describe "Rack::Attack throttling" do
     expect(response.headers["Retry-After"]).to be_present
     expect(response.parsed_body).to eq("error" => "Too many requests")
   end
+
+  it "limits unauthenticated OAuth registrations" do
+    61.times { post "/oauth/register", params: {}, headers: {"REMOTE_ADDR" => "1.2.3.4"}, as: :json }
+    expect(response).to have_http_status(:too_many_requests)
+    expect(response.headers["Retry-After"]).to be_present
+  end
 end

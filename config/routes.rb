@@ -1,6 +1,11 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
+  match "mcp", to: "mcp#handle", via: %i[get post delete]
+  get ".well-known/oauth-protected-resource/mcp", to: "mcp#metadata"
+  get "account/connections", to: "connections#index"
+  delete "account/connections/:id", to: "connections#destroy"
+
   # ── Rodauth handles: ────────────────────────────────────────────────
   # POST /login          — authenticate with email/password
   # POST /logout         — revoke session/refresh token

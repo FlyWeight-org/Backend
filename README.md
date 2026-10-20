@@ -81,10 +81,15 @@ have accounts; passengers can add their weights without logging in. {Pilot}s
 create {Flight} records for each of their flights; then they or their passengers
 can add {Load} records to those flights.
 
+### Assistant integration
+
+A hosted MCP endpoint supports pilot-authorized assistant access. See
+[connection setup, tools, and rollout](docs/mcp.md). It is disabled by default.
+
 ### Authorization
 
-Authentication is handled by Devise. The {Pilot} class is the user model for
-Devise, and users are authenticated by their email and password.
+Authentication is handled by Rodauth. The {Pilot} class is the account model.
+Pilots sign in with email/password or passkeys; browser sessions use JWTs.
 
 Passengers do not need to authenticate. They are provided with an unguessable
 URL where they can add themselves to a flight. When a passenger re-enters their

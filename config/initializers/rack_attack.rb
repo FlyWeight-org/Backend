@@ -27,6 +27,18 @@ Rack::Attack.throttle("verify-account/ip", limit: 10, period: 1.hour) do |req|
   req.ip if req.path == "/verify-account" && req.post?
 end
 
+Rack::Attack.throttle("oauth-registration/ip", limit: 60, period: 1.hour) do |req|
+  req.ip if req.path == "/oauth/register" && req.post?
+end
+
+Rack::Attack.throttle("oauth-token/ip", limit: 300, period: 1.minute) do |req|
+  req.ip if req.path == "/oauth/token" && req.post?
+end
+
+Rack::Attack.throttle("mcp/ip", limit: 600, period: 1.minute) do |req|
+  req.ip if req.path == "/mcp" && req.post?
+end
+
 Rack::Attack.throttled_responder = ->(request) do
   retry_after = (request.env["rack.attack.match_data"] || {})[:period].to_i
   [429, {"Content-Type" => "application/json", "Retry-After" => retry_after.to_s}, [{error: "Too many requests"}.to_json]]

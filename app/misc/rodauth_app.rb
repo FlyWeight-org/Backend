@@ -1,9 +1,12 @@
 # frozen_string_literal: true
 
 require "sequel/core"
+require "rodauth/oauth"
 
 class RodauthApp < Rodauth::Rails::App
   configure do
+    Mcp::OauthConfiguration.apply(self)
+
     # ── Database ──────────────────────────────────────────────────────────
 
     db Sequel.postgres(extensions: :activerecord_connection, keep_reference: false)
@@ -44,6 +47,8 @@ class RodauthApp < Rodauth::Rails::App
     #   POST /webauthn-remove  — handled by our passkeys controller
     webauthn_auth_route nil     # 2FA challenge flow, not used
     webauthn_remove_route nil   # handled by PasskeysController
+
+    use_jwt? true
 
     # ── JWT ───────────────────────────────────────────────────────────────
 
@@ -91,7 +96,7 @@ class RodauthApp < Rodauth::Rails::App
 
     # ── JSON API mode ─────────────────────────────────────────────────────
 
-    only_json? true
+    only_json? { !request.path.start_with?("/oauth/") }
 
     # ── Email ─────────────────────────────────────────────────────────────
 
@@ -224,5 +229,12 @@ class RodauthApp < Rodauth::Rails::App
     end
   end
 
-  route(&:rodauth)
+  route do |request|
+    if request.path.start_with?("/oauth/", "/.well-known/oauth-") && !Mcp::Settings.enabled?
+      response.status = 404
+      request.halt
+    end
+    rodauth.load_oauth_server_metadata_route if Mcp::Settings.enabled?
+    request.rodauth
+  end
 end
