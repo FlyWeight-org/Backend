@@ -13,5 +13,12 @@ module Qstash
       Flight.where(date: ...1.week.ago.to_date).destroy_all
       head :no_content
     end
+
+    # Deletes assistant grants that can no longer be used, then client registrations left without grants.
+    def purge_stale_oauth_records
+      OauthGrant.stale.delete_all
+      OauthApplication.abandoned.delete_all
+      head :no_content
+    end
   end
 end

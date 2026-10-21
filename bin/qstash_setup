@@ -24,6 +24,11 @@ SCHEDULES = [
     id:          "flyweight-purge-stale-flights",
     destination: "#{TARGET_BASE}/qstash/purge_stale_flights",
     cron:        "0 7 * * *" # 00:00 Pacific = 07:00 UTC
+  },
+  {
+    id:          "flyweight-purge-stale-oauth",
+    destination: "#{TARGET_BASE}/qstash/purge_stale_oauth_records",
+    cron:        "0 7 * * *"
   }
 ].freeze
 

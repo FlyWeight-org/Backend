@@ -44,7 +44,7 @@ it also reads `$PORT`, which overmind sets per-process.
 Postgres and Redis are expected to be running already, e.g. as brew services
 (`brew services start postgresql@17 redis`).
 
-Scheduled tasks (daily flight purge) are driven by QStash in production.
+Scheduled tasks (daily flight and stale OAuth record purges) are driven by QStash in production.
 See `bin/qstash_setup` for schedule registration.
 
 Install `overmind` to run the Procfile.

@@ -56,7 +56,9 @@ client's name, the union of its granted scopes, when it connected, and the host
 of its registered callback (with the port for loopback callbacks), which tells
 apart separate registrations of the same assistant. Revoking a client
 immediately invalidates all of that pilot's grants for it, including
-authorization codes not yet exchanged. Revocation and flight purging cannot remove data
+authorization codes not yet exchanged. A daily scheduled task deletes revoked grants,
+grants past their refresh window, unexchanged expired codes, and client registrations
+left without grants for more than a day. Revocation and flight purging cannot remove data
 already returned to an assistant.
 
 ## Tools and data

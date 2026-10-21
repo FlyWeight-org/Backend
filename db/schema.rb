@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_10_20_000002) do
+ActiveRecord::Schema[8.1].define(version: 2026_10_21_000000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -85,6 +85,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_20_000002) do
     t.string "grant_types", null: false
     t.string "response_types", null: false
     t.string "registration_access_token"
+    t.datetime "created_at", default: -> { "CURRENT_TIMESTAMP" }, null: false
     t.index ["client_id"], name: "index_oauth_applications_on_client_id", unique: true
   end
 

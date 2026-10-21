@@ -45,6 +45,7 @@ Rails.application.routes.draw do
 
   namespace :qstash do
     post :purge_stale_flights, to: "tasks#purge_stale_flights"
+    post :purge_stale_oauth_records, to: "tasks#purge_stale_oauth_records"
   end
 
   # ── Cypress test helpers ────────────────────────────────────────────

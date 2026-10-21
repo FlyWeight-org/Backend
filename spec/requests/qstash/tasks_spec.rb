@@ -87,4 +87,43 @@ RSpec.describe "/qstash/tasks" do
       expect { future.reload }.not_to raise_error
     end
   end
+
+  describe "POST /qstash/purge_stale_oauth_records" do
+    let(:path) { "/qstash/purge_stale_oauth_records" }
+    let(:body) { "{}" }
+    let(:pilot) { create :pilot }
+
+    def application(created_at: 2.days.ago)
+      OauthApplication.create!(client_id: SecureRandom.hex, name: "Assistant", redirect_uri: "https://assistant.example/callback",
+                               scopes: "flights:read", token_endpoint_auth_method: "none",
+                               grant_types: "authorization_code", response_types: "code", created_at:)
+    end
+
+    def grant(application, expires_in:, token: SecureRandom.hex, revoked_at: nil)
+      OauthGrant.create!(account: pilot, oauth_application: application, type: "authorization_code",
+                         redirect_uri: application.redirect_uri, scopes: "flights:read",
+                         resource: Mcp::Settings.resource, expires_in:, token:, revoked_at:)
+    end
+
+    it "deletes unusable grants, then registrations left without grants" do
+      connected = application
+      live      = grant(connected, expires_in: 10.minutes.from_now)
+      pending   = grant(connected, expires_in: 5.minutes.from_now, token: nil)
+      grant connected, expires_in: 10.minutes.from_now, revoked_at: 1.hour.ago
+      grant connected, expires_in: 1.minute.ago, token: nil
+      lapsed = application
+      grant lapsed, expires_in: 31.days.ago
+      application
+      registering = application(created_at: 1.hour.ago)
+
+      signature = sign(body, current_key)
+      post path,
+           params:  body,
+           headers: {"Content-Type" => "application/json", "Upstash-Signature" => signature}
+
+      expect(response).to have_http_status(:no_content)
+      expect(OauthGrant.all).to contain_exactly(live, pending)
+      expect(OauthApplication.all).to contain_exactly(connected, registering)
+    end
+  end
 end

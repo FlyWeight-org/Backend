@@ -8,7 +8,7 @@ class ConnectionsController < ApplicationController
   def index
     return render json: {enabled: false, connections: []} unless Mcp::Settings.enabled?
 
-    connections = live_grants.includes(:oauth_application).order(:created_at).group_by(&:oauth_application).
+    connections = grants.live.includes(:oauth_application).order(:created_at).group_by(&:oauth_application).
         map { |application, rows| connection(application, rows) }
     render json: {enabled: true, connections: connections}
   end
@@ -25,12 +25,6 @@ class ConnectionsController < ApplicationController
   private
 
   def grants = OauthGrant.unrevoked.where(account_id: current_pilot.id)
-
-  # Exchanged grants whose refresh token can still be used.
-  def live_grants = grants.where.not(token: nil).where(expires_in: refresh_cutoff..)
-
-  # A grant's `expires_in` tracks its access token, and its refresh token outlives that by the difference in lifetimes.
-  def refresh_cutoff = (rodauth.oauth_refresh_token_expires_in - rodauth.oauth_access_token_expires_in).seconds.ago
 
   def connection(application, rows)
     {id: application.id, name: application.name, scopes: Mcp::Settings::SCOPES & rows.flat_map(&:permissions),

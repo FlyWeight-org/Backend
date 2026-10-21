@@ -3,6 +3,9 @@
 module Mcp
   # Configures Rodauth's OAuth provider alongside browser JWT authentication.
   module OauthConfiguration
+    ACCESS_TOKEN_LIFETIME = 15.minutes
+    REFRESH_TOKEN_LIFETIME = 30.days
+
     # @param configuration [Rodauth::Configuration] The application's authentication configuration.
     def self.apply(configuration)
       configuration.instance_eval do
@@ -15,8 +18,8 @@ module Mcp
         oauth_valid_uri_schemes %w[https http]
         oauth_application_scopes Settings::SCOPES
         oauth_token_endpoint_auth_methods_supported %w[none client_secret_basic client_secret_post]
-        oauth_access_token_expires_in 15.minutes.to_i
-        oauth_refresh_token_expires_in 30.days.to_i
+        oauth_access_token_expires_in ACCESS_TOKEN_LIFETIME.to_i
+        oauth_refresh_token_expires_in REFRESH_TOKEN_LIFETIME.to_i
         oauth_refresh_token_protection_policy "rotation"
         oauth_require_pkce true
         oauth_pkce_allow_plain_method false
