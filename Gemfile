@@ -3,7 +3,7 @@
 source "https://rubygems.org"
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby "4.0.7"
+ruby "~> 4.0.0"
 
 # CORE
 gem "bootsnap", require: false
@@ -15,12 +15,11 @@ gem "responders"
 gem "anycable-rails"
 gem "bcrypt"
 gem "jwt"
-gem "kredis"
-gem "mcp", "~> 1.8"
+gem "mcp"
 gem "rack-attack"
 gem "rack-cors"
 gem "redis"
-gem "rodauth-oauth", "~> 1.7"
+gem "rodauth-oauth"
 gem "rodauth-rails"
 gem "sequel-activerecord_connection"
 gem "tilt"
