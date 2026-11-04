@@ -15,3 +15,6 @@ production:
   adapter: redis
   url: <%= ENV["REDIS_URL"] %>
   channel_prefix: flyweight_production
+  # Upstash can take more than redis-client's default second to answer a new
+  # connection's handshake, which would drop that broadcast.
+  connect_timeout: 5
