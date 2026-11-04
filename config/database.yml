@@ -1,7 +1,9 @@
 default: &default
   adapter: postgresql
   encoding: unicode
-  pool: <%= ENV.fetch('RAILS_MAX_THREADS') { 5 } %>
+  # Puma request threads plus the Action Cable worker pool
+  # (config.action_cable.worker_pool_size).
+  pool: <%= ENV.fetch('RAILS_MAX_THREADS') { 3 }.to_i + 2 %>
   owner: flyweight
   username: flyweight
 

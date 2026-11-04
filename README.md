@@ -30,16 +30,13 @@ To run the server in development mode, you can create a `Procfile` in the parent
 directory with contents such as:
 
 ```procfile
-backend: cd Backend && PORT=5000 ANYCABLE_HTTP_RPC=true rvm 4.0.9@flyweight do rails server
+backend: cd Backend && PORT=5000 rvm 4.0.9@flyweight do rails server
 frontend: cd Frontend && pnpm dev
-ws: cd Backend && rvm 4.0.9@flyweight do bin/anycable-go --port=8080 --rpc_host=http://localhost:5000/_anycable
 ```
 
 `PORT=5000` matches `config/urls.yml` and the front-end's `.env` files; Puma
-would otherwise default to 3000. `ANYCABLE_HTTP_RPC` mounts AnyCable's RPC
-endpoint at `/_anycable` inside the Rails server, the way production runs it, so
-no separate RPC process is needed. Pass `--port` to `anycable-go` explicitly:
-it also reads `$PORT`, which overmind sets per-process.
+would otherwise default to 3000. Action Cable is served by the Rails server at
+`/cable`, backed by Redis.
 
 Postgres and Redis are expected to be running already, e.g. as brew services
 (`brew services start postgresql@17 redis`).

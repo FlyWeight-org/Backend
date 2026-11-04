@@ -68,6 +68,10 @@ module Flyweight
     config.action_cable.url                     = config.urls.cable
     config.action_cable.allowed_request_origins = [config.urls.frontend]
 
+    # Channel callbacks (connect, subscribed, ...) hit the database on this
+    # pool; database.yml adds its size to the pool for Puma's request threads.
+    config.action_cable.worker_pool_size = 2
+
     config.active_record.encryption.support_sha1_for_non_deterministic_encryption = false
 
     backend                                      = URI.parse(Rails.application.config.urls.backend)
@@ -77,12 +81,8 @@ module Flyweight
         protocol: backend.scheme
     }
 
-    # /_anycable is anycable-go's HTTP RPC endpoint, reached internally over
-    # flyweight-backend.flycast — a Host that isn't (and shouldn't be) in
-    # config.hosts. It has its own Bearer-secret auth, so exclude it from host
-    # authorization the same way the health and metrics endpoints are.
     config.host_authorization = {
-        exclude: ->(request) { request.path.start_with?("/up") || request.path == "/metrics" || request.path.start_with?("/_anycable") }
+        exclude: ->(request) { request.path.start_with?("/up") || request.path == "/metrics" }
     }
   end
 end
