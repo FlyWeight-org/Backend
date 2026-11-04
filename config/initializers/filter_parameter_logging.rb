@@ -7,5 +7,5 @@
 # See the ActiveSupport::ParameterFilter documentation for supported notations and behaviors.
 Rails.application.config.filter_parameters += %i[
     code code_verifier code_challenge state arguments params
-    passw email secret token _key crypt salt certificate otp ssn cvv cvc
+    passw email secret token jwt _key crypt salt certificate otp ssn cvv cvc
 ]
