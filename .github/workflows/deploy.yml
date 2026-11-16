@@ -32,7 +32,7 @@ jobs:
       - name: Deploy to Fly.io
         run: flyctl deploy --remote-only
       - name: Create Sentry release
-        uses: getsentry/action-release@v3.7.2
+        uses: getsentry/action-release@v3.8.0
         env:
           SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
           SENTRY_ORG: timcodes
