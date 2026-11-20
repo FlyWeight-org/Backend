@@ -62,11 +62,12 @@ RSpec.describe "sessions" do
   end
 
   describe "POST /logout" do
-    it "returns success when authenticated" do
+    it "returns success without issuing a new token" do
       post "/logout",
            headers: {"Authorization" => "Bearer #{jwt_for(pilot)}"},
            as:      :json
       expect(response).to have_http_status(:success)
+      expect(response.headers["Authorization"]).to be_blank
     end
   end
 end
