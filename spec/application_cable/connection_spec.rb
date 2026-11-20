@@ -14,6 +14,11 @@ RSpec.describe ApplicationCable::Connection, type: :channel do
     expect(connection.current_pilot).to eq(pilot)
   end
 
+  it "rejects a JWT that names a pilot but no logged-in account" do
+    token = JWT.encode({"e" => pilot.email, "exp" => 1.hour.from_now.to_i}, Rails.application.credentials.jwt_secret, "HS256")
+    expect { connect params: {jwt: token} }.to have_rejected_connection
+  end
+
   it "rejects valid JWTs for deleted pilots" do
     jwt = jwt_for(pilot)
     pilot.destroy!

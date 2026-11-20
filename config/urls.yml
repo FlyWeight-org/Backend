@@ -10,7 +10,7 @@ test:
 
 cypress:
   backend: "http://127.0.0.1:5000"
-  frontend: "http://127.0.0.1:4173"
+  frontend: "http://localhost:4173"
   cable: "ws://127.0.0.1:5000/cable"
 
 production:

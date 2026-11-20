@@ -9,7 +9,9 @@ module ApplicationCable
   #
   # Connections are identified by a {Pilot}'s JSON web token (JWT). When
   # making a request to `/cable`, pass the JWT as a query parameter
-  # (`/cable?jwt=abc123`).
+  # (`/cable?jwt=abc123`). The pilot is looked up by the JWT's `account_id`
+  # claim, which only a logged-in session's token carries; any other token
+  # (such as a pre-login WebAuthn challenge token) is rejected.
 
   class Connection < ActionCable::Connection::Base
 
@@ -31,7 +33,7 @@ module ApplicationCable
 
     private
 
-    def find_verified_pilot = Pilot.find_by!(email: jwt["e"])
+    def find_verified_pilot = Pilot.find(jwt["account_id"])
 
     def decode_jwt(token)
       secret = Rails.application.credentials.jwt_secret
