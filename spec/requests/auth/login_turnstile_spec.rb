@@ -10,7 +10,7 @@ RSpec.describe "POST /login with Turnstile" do
     before(:each) do
       allow(TurnstileVerifier).to receive(:verify).
           and_return(TurnstileVerifier::Result.new(success?: true, error_codes: []))
-      allow(Rails).to receive(:env).and_return(ActiveSupport::StringInquirer.new("cypress"))
+      allow(Rails).to receive(:env).and_return(ActiveSupport::StringInquirer.new("development"))
     end
 
     it "logs the user in" do
@@ -25,7 +25,7 @@ RSpec.describe "POST /login with Turnstile" do
     before(:each) do
       allow(TurnstileVerifier).to receive(:verify).
           and_return(TurnstileVerifier::Result.new(success?: false, error_codes: %w[invalid-input-response]))
-      allow(Rails).to receive(:env).and_return(ActiveSupport::StringInquirer.new("cypress"))
+      allow(Rails).to receive(:env).and_return(ActiveSupport::StringInquirer.new("development"))
     end
 
     it "returns 400 and does not issue a token" do

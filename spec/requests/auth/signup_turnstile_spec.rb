@@ -10,7 +10,7 @@ RSpec.describe "POST /signup with Turnstile" do
       allow(TurnstileVerifier).to receive(:verify).
           and_return(TurnstileVerifier::Result.new(success?: true, error_codes: []))
       # Force the rodauth hook out of test-bypass mode for this example.
-      allow(Rails).to receive(:env).and_return(ActiveSupport::StringInquirer.new("cypress"))
+      allow(Rails).to receive(:env).and_return(ActiveSupport::StringInquirer.new("development"))
     end
 
     it "creates the account" do
@@ -24,7 +24,7 @@ RSpec.describe "POST /signup with Turnstile" do
     before(:each) do
       allow(TurnstileVerifier).to receive(:verify).
           and_return(TurnstileVerifier::Result.new(success?: false, error_codes: %w[invalid-input-response]))
-      allow(Rails).to receive(:env).and_return(ActiveSupport::StringInquirer.new("cypress"))
+      allow(Rails).to receive(:env).and_return(ActiveSupport::StringInquirer.new("development"))
     end
 
     it "returns 400 and does not create the account" do

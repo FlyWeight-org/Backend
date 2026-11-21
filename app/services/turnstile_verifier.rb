@@ -9,7 +9,7 @@ class TurnstileVerifier
 
   def self.verify(token, remote_ip)
     secret = ENV.fetch("TURNSTILE_SECRET_KEY") do
-      raise "TURNSTILE_SECRET_KEY missing" unless Rails.env.local? || Rails.env.cypress?
+      raise "TURNSTILE_SECRET_KEY missing" unless Rails.env.local?
 
       "1x0000000000000000000000000000000AA" # Cloudflare always-passes test secret
     end
