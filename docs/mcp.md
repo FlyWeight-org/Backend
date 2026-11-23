@@ -112,8 +112,8 @@ Rate limits:
 - Per-IP backstops whatever credential is sent: 600 token requests and 1,200
   MCP calls per minute, which bound requests with made-up credentials.
 
-Throttling returns HTTP 429 with `Retry-After`. Production stores rate-limit
-counters in the Redis instance at `REDIS_URL`.
+Throttling returns HTTP 429 with `Retry-After`. Rate-limit counters live
+in process memory, so they reset on restart.
 
 Logs record `mcp.tool` events (tool, outcome, duration) and `mcp.authorization`
 failures without tool arguments, passenger weights, or bearer tokens. Tool

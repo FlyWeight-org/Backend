@@ -1,11 +1,6 @@
 # frozen_string_literal: true
 
-Rack::Attack.cache.store =
-    if ENV["REDIS_URL"].present?
-      ActiveSupport::Cache::RedisCacheStore.new(url: ENV.fetch("REDIS_URL"))
-    else
-      ActiveSupport::Cache::MemoryStore.new
-    end
+Rack::Attack.cache.store = ActiveSupport::Cache::MemoryStore.new
 
 Rack::Attack.throttle("signup/ip/hour", limit: 3, period: 1.hour) do |req|
   req.ip if req.path == "/signup" && req.post?

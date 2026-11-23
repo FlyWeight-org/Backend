@@ -2,7 +2,6 @@
 
 require "active_support/core_ext/integer/time"
 require_relative "../../app/middleware/verify_database_connection"
-require_relative "../../app/middleware/verify_redis_connection"
 
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
@@ -78,9 +77,6 @@ Rails.application.configure do
   # Skip DNS rebinding protection for the default health check endpoint.
   # config.host_authorization = { exclude: ->(request) { request.path == "/up" } }
 
-  # Reconnect to Redis (rack-attack) and Postgres if pooled sockets died
-  # during Fly suspend. Order matters: Rack::Attack runs early in the stack
-  # and trips Redis before any controller touches AR, so verify Redis first.
-  config.middleware.use VerifyRedisConnection
+  # Reconnect to Postgres if pooled sockets died during Fly suspend.
   config.middleware.use VerifyDatabaseConnection
 end

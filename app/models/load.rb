@@ -50,7 +50,7 @@ class Load < ApplicationRecord
   validate :total_weight_greater_than_zero
 
   before_validation :set_slug
-  after_commit { LoadsChannel.broadcast_safely_to flight, LoadsChannel::Coder.encode(self) }
+  after_commit { LoadsChannel.broadcast_to flight, LoadsChannel::Coder.encode(self) }
 
   # Derives the slug that identifies a Load named `name` within its Flight.
   # Names with no ASCII transliteration (such as CJK or emoji) get a digest of

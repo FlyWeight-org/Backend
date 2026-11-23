@@ -59,8 +59,8 @@ Rails.application.routes.draw do
 
   get "up" => "rails/health#show", as: :rails_health_check
 
-  # Frontend warm-up ping; goes through the verify-* middlewares so a hit
-  # here wakes Postgres and Redis pools alongside the Fly machine itself.
+  # Frontend warm-up ping; goes through VerifyDatabaseConnection so a hit
+  # here wakes the Postgres pool alongside the Fly machine itself.
   get "presence" => "presence#show"
 
   get "metrics" => "metrics#show" unless Rails.env.test? || Rails.env.cypress?

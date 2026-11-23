@@ -18,7 +18,7 @@ giving passengers a basic assurance of privacy.
 
 ### Installation and Running
 
-FlyWeight requires Ruby 4.0.10, PostgreSQL, and Redis. (If you use Homebrew,
+FlyWeight requires Ruby 4.0.10, and PostgreSQL. (If you use Homebrew,
 you can install those dependencies with `brew install`.) After cloning the
 repository, run `bundle install` to install all gem requirements. Run
 `rails db:create db:migrate` to create the development database.
@@ -36,10 +36,10 @@ frontend: cd Frontend && pnpm dev
 
 `PORT=5000` matches `config/urls.yml` and the front-end's `.env` files; Puma
 would otherwise default to 3000. Action Cable is served by the Rails server at
-`/cable`, backed by Redis.
+`/cable`.
 
-Postgres and Redis are expected to be running already, e.g. as brew services
-(`brew services start postgresql@17 redis`).
+Postgres is expected to be running already, e.g. as a brew service
+(`brew services start postgresql@17`).
 
 Scheduled tasks (daily flight and stale OAuth record purges) are driven by QStash in production.
 See `bin/qstash_setup` for schedule registration.
